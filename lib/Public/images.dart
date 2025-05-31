@@ -1,0 +1,89 @@
+
+
+
+const String menuIcon='assets/images/menu.svg';
+const String homeIcon='assets/images/home.svg';
+const String homeBlankIcon='assets/images/home-blank.svg';
+const String homeFillIcon='assets/images/home-fill.svg';
+const String searchIcon='assets/images/search.svg';
+const String searchBlankIcon='assets/images/search-blank.svg';
+const String searchFillIcon='assets/images/search-fill.svg';
+const String categoryIcon='assets/images/category.svg';
+const String categoryBlankIcon='assets/images/category-blank.svg';
+const String categoryFillIcon='assets/images/category-fill.svg';
+const String ordersBlankIcon='assets/images/orders-blank.svg';
+const String ordersFillIcon='assets/images/orders-blank.svg';
+const String userIcon='assets/images/user.svg';
+const String userBlankIcon='assets/images/user-blank.svg';
+const String userFillIcon='assets/images/user-fill.svg';
+const String smsIcon='assets/images/sms.svg';
+const String chooserIcon='assets/images/chooser.svg';
+const String folderIcon='assets/images/folder.svg';
+const String cameraIcon='assets/images/camera.svg';
+const String removeIcon='assets/images/remove.svg';
+const String bellIcon='assets/images/bell.svg';
+const String manualIcon='assets/images/manual.svg';
+const String arrowIcon='assets/images/arrow.svg';
+const String callIcon='assets/images/call.svg';
+const String moneyIcon='assets/images/money.svg';
+const String timeIcon='assets/images/time.svg';
+const String successIcon='assets/images/success.svg';
+const String star1Icon='assets/images/star1.svg';
+const String star2Icon='assets/images/star2.svg';
+const String favoriteIcon='assets/images/favorite.svg';
+const String filterIcon='assets/images/filter.svg';
+const String heartIcon='assets/images/heart.svg';
+const String backIcon='assets/images/back.svg';
+const String progressIcon='assets/images/progress.svg';
+const String doneIcon='assets/images/done.svg';
+const String payIcon='assets/images/pay.svg';
+const String rateIcon='assets/images/star2.svg';
+const String editProfileIcon='assets/images/editProfile.svg';
+const String transactionIcon='assets/images/transaction.svg';
+const String ticketIcon='assets/images/ticket.svg';
+const String locationIcon='assets/images/location.svg';
+const String cityIcon='assets/images/city.svg';
+const String dateIcon='assets/images/date.svg';
+const String clockIcon='assets/images/clock.svg';
+const String clock2Icon='assets/images/clock2.svg';
+const String favoritedIcon='assets/images/favorited.svg';
+const String alertIcon='assets/images/alert.svg';
+const String questionIcon='assets/images/question.svg';
+const String downIcon='assets/images/down.svg';
+const String infoIcon='assets/images/info.svg';
+const String mapIcon='assets/images/map.svg';
+const String connectionerrorIcon='assets/images/connectionerror.svg';
+const String additionIcon='assets/images/addition.svg';
+const String discountIcon='assets/images/discount.svg';
+const String diamondIcon='assets/images/diamond.svg';
+const String polygonIcon='assets/images/polygon.svg';
+const String backupIcon='assets/images/backup.svg';
+const String emptyCategoryIcon='assets/images/empty-category.svg';
+const String shareIcon='assets/images/share.svg';
+const String playIcon='assets/images/play.svg';
+
+const String loginImage='assets/logos/login.png';
+const String splashImage='assets/logos/splash.png';
+
+
+const String cancelstateIcon='assets/images/cancel-state.svg';
+const String waitingstateIcon='assets/images/waiting-state.svg';
+const String doingstateIcon='assets/images/doing-state.svg';
+const String donestateIcon='assets/images/done-state.svg';
+
+const String editIcon='assets/images/edit.svg';
+const String wrenchIcon='assets/images/wrench.svg';
+const String paymentIcon='assets/images/payment.svg';
+const String sucssessDrawerIcon='assets/images/sucssessDrawer.svg';
+const String percentDrawerIcon='assets/images/percentDrawer.svg';
+const String callDrawerIcon='assets/images/callDrawer.svg';
+const String instagramDrawerIcon='assets/images/instagramDrawer.svg';
+const String logoutDrawerIcon='assets/images/logoutDrawer.svg';
+
+const String payHistoryIcon='assets/images/payhistoryicon.svg';
+const String walletIcon='assets/images/wallet.svg';
+const String onlineIcon='assets/images/online.svg';
+const String tickIcon='assets/images/tick.svg';
+const String removalIcon='assets/images/removal.svg';
+const String timerIcon='assets/images/timer.svg';
+const String calenderIcon='assets/images/calender.svg';
