@@ -50,14 +50,20 @@ class SliderItem1 extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      '${service.title ?? ''}',
-                      style: AppController.fontStyle(
-                        fontTypes.regular14,
-                        itemColor1,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            '${service.title ?? ''}',
+                            style: AppController.fontStyle(
+                              fontTypes.regular14,
+                              itemColor1,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 3,
+                          ),
+                        ),
+                      ],
                     ),
                     // Text(
                     //     '${service.description??''}',

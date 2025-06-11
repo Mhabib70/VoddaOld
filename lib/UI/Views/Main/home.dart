@@ -13,6 +13,7 @@ import 'package:vodda_old/UI/Components/Sliders/detail-slider.dart';
 import 'package:vodda_old/UI/Components/Sliders/main-slider.dart';
 import 'package:vodda_old/UI/Components/Sliders/slider-types-.dart';
 import 'package:vodda_old/UI/Views/Main/sub-list.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);
@@ -71,7 +72,46 @@ class Home extends StatelessWidget {
             ),
           ),
           for (var tag in ServiceController.serviceTags) SliderTypes(tag),
-          for (var tag in ServiceController.providerTags) SliderTypes(tag),
+          // for(var tag in ServiceController.providerTags)
+          //     SliderTypes(tag),
+          Text(
+            'ما را در شبکه های اجتماعی دنبال کنید',
+            style: AppController.fontStyle(fontTypes.heading3, itemColor1),
+            maxLines: 1,
+          ),
+          SizedBox(height: 15),
+          ScrollConfiguration(
+            behavior: ScrollConfiguration.of(context).copyWith(
+              scrollbars: false,
+              dragDevices: {PointerDeviceKind.touch, PointerDeviceKind.mouse},
+            ),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  for (var json in MainController.setting['socials'])
+                    Padding(
+                      padding: const EdgeInsets.only(right: 15.0),
+                      child: InkWell(
+                        onTap: () {
+                          launchUrlString(json['link']);
+                        },
+                        child: Img(
+                          json['file'],
+                          width: 100,
+                          height: 100,
+                          isNetwork: true,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ),
+
+          SizedBox(height: 40),
         ],
       ),
     );

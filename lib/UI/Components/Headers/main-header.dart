@@ -31,9 +31,27 @@ class MainHeader extends StatelessWidget {
                   //   if(openDrawer!=null)
                   //     openDrawer!();
                   // },),
-                  Img(appLogo, width: 80, color: appColor),
+                  // Img(appLogo,width:80,color: appColor),
                   // SizedBox(width: 20,),
                   // Text('${appTitle}',style: AppController.fontStyle(fontTypes.heading2,itemColor1),),
+                  InkWell(
+                    onTap: () {
+                      launchUrlString("https://goftino.com/c/Vpq2bC");
+                    },
+                    child: Row(
+                      children: [
+                        Img(smsIcon, width: 30, height: 30, color: appColor),
+                        SizedBox(width: 10),
+                        Text(
+                          'چت با پشتیبان',
+                          style: AppController.fontStyle(
+                            fontTypes.heading5,
+                            itemColor1,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   SizedBox(width: 40),
                   size.width < maxItemWidth
                       ? Container()
@@ -58,10 +76,10 @@ class MainHeader extends StatelessWidget {
                             Container(
                               padding: EdgeInsets.all(10),
                               child: Text(
-                                'دسته ها',
+                                'جستجو',
                                 style: AppController.fontStyle(
                                   fontTypes.heading3,
-                                  MainController.tabController!.index == 1
+                                  MainController.tabController!.index == 2
                                       ? appColor
                                       : itemColor3,
                                 ),
@@ -70,10 +88,10 @@ class MainHeader extends StatelessWidget {
                             Container(
                               padding: EdgeInsets.all(10),
                               child: Text(
-                                'جستجو',
+                                'دسته ها',
                                 style: AppController.fontStyle(
                                   fontTypes.heading3,
-                                  MainController.tabController!.index == 2
+                                  MainController.tabController!.index == 1
                                       ? appColor
                                       : itemColor3,
                                 ),

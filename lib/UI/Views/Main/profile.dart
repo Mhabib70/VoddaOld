@@ -329,6 +329,10 @@ class Profile extends StatelessWidget {
                       },
                     ),
                     MyDivider(),
+                    // ListMenuItem(smsIcon, 'چت با پشتیبانی',onClick: (){
+                    //   launchUrlString("https://goftino.com/c/Vpq2bC");}
+                    //
+                    //   ),MyDivider(),
                     ListMenuItem(
                       questionIcon,
                       'سوالات متداول',

@@ -18,36 +18,49 @@ class DateItem extends StatelessWidget {
         if (this.onClick != null) this.onClick!();
       },
       child: Container(
-        width: selected ? 100 : 90,
-        height: selected ? 140 : 120,
+        width: 90,
+        height: 110,
         margin: EdgeInsets.all(5),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
-          border: Border.all(width: 3, color: selected ? appColor : itemColor5),
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            width: selected ? 3 : 1,
+            color: selected ? appColor : itemColor5,
+          ),
           color: Colors.white,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              '${date.day ?? ''}',
-              style: AppController.fontStyle(
-                fontTypes.heading1,
-                selected ? appColor : itemColor4,
-              ),
-            ),
-            Text(
               '${date.weekDay ?? ''}',
               style: AppController.fontStyle(
-                fontTypes.heading3,
+                fontTypes.heading5,
                 selected ? appColor : itemColor2,
+              ),
+            ),
+            Container(
+              width: 40,
+              height: 40,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                color: selected ? appColor : Colors.transparent,
+              ),
+              child: Text(
+                '${int.parse((date.day) ?? '0')}',
+                style: AppController.fontStyle(
+                  fontTypes.heading3,
+                  selected ? whiteColor : itemColor1,
+                ),
+                textAlign: TextAlign.center,
               ),
             ),
             Text(
               '${date.month ?? ''}',
               style: AppController.fontStyle(
-                fontTypes.text1,
-                selected ? appColor : itemColor4,
+                fontTypes.text2,
+                selected ? appColor : itemColor1,
               ),
             ),
           ],

@@ -74,11 +74,20 @@ class Input extends StatelessWidget {
           hintText: this.hint ?? '',
           hintStyle: AppController.fontStyle(fontTypes.heading4, itemColor4),
         ),
-        keyboardType: isNumber ? TextInputType.number : TextInputType.text,
+        keyboardType:
+            isNumber
+                ? TextInputType.number
+                : lines == 1
+                ? TextInputType.text
+                : TextInputType.multiline,
+        textInputAction:
+            lines == 1 ? TextInputAction.next : TextInputAction.newline,
         inputFormatters: <TextInputFormatter>[
           isNumber
               ? FilteringTextInputFormatter.digitsOnly
-              : FilteringTextInputFormatter.singleLineFormatter,
+              : TextInputFormatter.withFunction(
+                (oldValue, newValue) => newValue,
+              ),
         ],
         onChanged: (text) {
           if (onChange != null) this.onChange!(text);

@@ -64,6 +64,7 @@ const String playIcon='assets/images/play.svg';
 
 const String loginImage='assets/logos/login.png';
 const String splashImage='assets/logos/splash.png';
+const String tikImage='assets/images/tik.jpg';
 
 
 const String cancelstateIcon='assets/images/cancel-state.svg';

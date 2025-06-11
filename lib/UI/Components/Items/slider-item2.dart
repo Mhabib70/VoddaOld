@@ -23,8 +23,20 @@ class SliderItem2 extends StatelessWidget {
         );
       },
       child: Container(
-        margin: EdgeInsets.only(left: 10, bottom: 35, top: 35),
+        margin: EdgeInsets.only(left: 10, bottom: 35, top: 15),
+        width: 150,
+        height: 210,
+        decoration: BoxDecoration(
+          border: Border.all(
+            color: Colors.lightBlueAccent.withOpacity(0.5),
+            width: 1,
+            style: BorderStyle.solid,
+          ),
+          borderRadius: BorderRadius.circular(5),
+          color: Colors.white,
+        ),
         child: Column(
+          // mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             service.images.length > 0
                 ? Img(
@@ -34,15 +46,22 @@ class SliderItem2 extends StatelessWidget {
                   isNetwork: true,
                 )
                 : Container(width: 120, height: 120),
-            Container(
-              alignment: Alignment.center,
-              padding: EdgeInsets.only(left: 10, right: 10),
-              child: Text(
-                '${service.title ?? ''}',
-                style: AppController.fontStyle(fontTypes.bold14, itemColor1),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
+            SizedBox(height: 10),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    '${service.title ?? ''}',
+                    style: AppController.fontStyle(
+                      fontTypes.bold14,
+                      itemColor1,
+                    ),
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
             ),
             // SizedBox(
             //   height: 10,

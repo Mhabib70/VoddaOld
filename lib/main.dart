@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:vodda_old/Logic/Controllers/app-controller.dart';
-import 'package:vodda_old/Logic/Helpers/api-methods.dart';
+// import 'package:vodda_old/Logic/Controllers/app-controller.dart';
+// import 'package:vodda_old/Logic/Helpers/api-methods.dart';
 import 'package:vodda_old/Public/config.dart';
 import 'package:vodda_old/UI/Views/User/connection-error.dart';
-import 'package:vodda_old/laravel_echo/src/connector/connector.dart';
+// import 'package:vodda_old/laravel_echo/src/connector/connector.dart';
 import 'package:universal_html/html.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -84,29 +84,17 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       textDirection: TextDirection.rtl,
-
       builder:
           (context, child) => ResponsiveBreakpoints.builder(
-            child: child!,
+            child: BouncingScrollWrapper.builder(context, child!),
+            // defaultScale: true,
             breakpoints: [
               const Breakpoint(start: 0, end: 450, name: MOBILE),
-              const Breakpoint(start: 451, end: 800, name: TABLET),
-              const Breakpoint(start: 801, end: 1920, name: DESKTOP),
-              const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
+          const Breakpoint(start: 451, end: 800, name: TABLET),
+          const Breakpoint(start: 801, end: 1920, name: DESKTOP),
+          const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
             ],
           ),
-      // builder:
-      //     (context, child) => ResponsiveWrapper.builder(
-      //       BouncingScrollWrapper.builder(context, child!),
-      //       defaultScale: true,
-      //       breakpoints: [
-      //         const ResponsiveBreakpoint.resize(450, name: MOBILE),
-      //         const ResponsiveBreakpoint.autoScale(800, name: TABLET),
-      //         const ResponsiveBreakpoint.autoScale(1000, name: TABLET),
-      //         const ResponsiveBreakpoint.resize(1200, name: DESKTOP),
-      //         const ResponsiveBreakpoint.autoScale(2460, name: "4K"),
-      //       ],
-      //     ),
       initialRoute: '/',
       // onUnknownRoute: (settings){
       //   List<String> pathComponents = settings.name!.split('/');

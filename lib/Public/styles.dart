@@ -86,7 +86,4 @@ Map<int, Color> _primaryMap = {
   900: appColor.withOpacity(0.9),
 };
 
-MaterialColor primarySwatch = MaterialColor(
-  Colors.blue[600]!.value,
-  _primaryMap,
-);
+MaterialColor primarySwatch = MaterialColor(appColor.value, _primaryMap);

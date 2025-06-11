@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -91,6 +92,11 @@ class UserController extends GetxController {
             ServiceController.services[service.id!] = service;
             myFavorites.add(service.id!);
           }
+          myFavorites.sort(
+            (a, b) => ServiceController.services[b]!.orderIndex!.compareTo(
+              ServiceController.services[a]!.orderIndex!,
+            ),
+          );
         },
         printResponse: false,
       );
@@ -204,7 +210,18 @@ class UserController extends GetxController {
   }
 
   static chooseProfile(ImageSource imageSource) async {
-    if ((!kIsWeb && await Permission.storage.request().isGranted) || kIsWeb) {
+    var accepted = false;
+    if (!kIsWeb) {
+      final androidInfo = await DeviceInfoPlugin().androidInfo;
+
+      if (androidInfo.version.sdkInt <= 32 &&
+          await Permission.storage.request().isGranted) {
+        accepted = true;
+      } else if (await Permission.photos.request().isGranted) {
+        accepted = true;
+      }
+    }
+    if (kIsWeb || accepted) {
       final ImagePicker _picker = ImagePicker();
       XFile? image = await _picker.pickImage(
         source: imageSource,
@@ -215,7 +232,7 @@ class UserController extends GetxController {
         final croppedFile = await ImageCropper().cropImage(
           sourcePath: image.path,
           compressFormat: ImageCompressFormat.jpg,
-
+          ///TODO: Emrani removed this
           // cropStyle: CropStyle.circle,
           compressQuality: 100,
           uiSettings: [
@@ -230,8 +247,8 @@ class UserController extends GetxController {
             ),
             WebUiSettings(
               context: Get.context!,
+              ///TODO: Emrani removed this
               // presentStyle: CropperPresentStyle.page,
-
               // boundary: CroppieBoundary(
               //   width:
               //       maxItemWidth >
@@ -339,6 +356,11 @@ class UserController extends GetxController {
             ServiceController.services[service.id!] = service;
             myFavorites.add(service.id!);
           }
+          myFavorites.sort(
+            (a, b) => ServiceController.services[b]!.orderIndex!.compareTo(
+              ServiceController.services[a]!.orderIndex!,
+            ),
+          );
         },
       );
     }
@@ -677,7 +699,10 @@ class UserController extends GetxController {
     RestApi.responseHandler(
       response: response,
       successCallback: () {
-        launchUrlString(baseUrl + response!.data['data']['pay_link']);
+        launchUrlString(
+          baseUrl + response!.data['data']['pay_link'],
+          mode: LaunchMode.externalApplication,
+        );
       },
     );
     AppController.isLoading.value = false;

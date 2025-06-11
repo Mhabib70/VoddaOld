@@ -145,11 +145,14 @@ class MainController extends GetxController {
           provinces[province.id!] = province;
         }
         setting = response.data['data']['setting'];
+        print('asdadaf>>>${setting['socials']}');
         mainSlider = [];
+        print('aaaa>>>${response.data['data']['slider']}');
         if (response.data['data']['slider'] != null)
           for (var json in response.data['data']['slider']['images']) {
             mainSlider.add(web.kIsWeb ? json['file_pwa'] : json['file']);
           }
+        print('bbb>>>${mainSlider}');
         sidebarLinks = [];
         for (var json in response.data['data']['links']) {
           LinkMenu link = LinkMenu.fromJson(json);

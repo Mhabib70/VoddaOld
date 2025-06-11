@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' as Get;
 import 'package:vodda_old/Logic/Helpers/token-methods.dart';
-import 'package:vodda_old/UI/Views/Main/main-index.dart';
 import '../../UI/Components/Popups/snackbar.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
@@ -65,6 +64,9 @@ class RestApi {
         print('>>>>>>>>>>>>>>connectTimeout<<<<<<<<<<<<<<<<');
         isConnected = false;
         return null;
+      } else {
+        print('apiError>>>${e.toString()}');
+        return null;
       }
     }
   }
@@ -117,11 +119,22 @@ class RestApi {
     } catch (e) {
       if (e is DioError && e.response != null) {
         return e.response;
-      } else if (e is DioException) {
+      }
+      ///TODO: Emrani added this
+      if (e is DioException) {
         print('>>>>>>>>>>>>>>connectTimeout<<<<<<<<<<<<<<<<');
         isConnected = false;
         return null;
       }
+      ///TODO: Emrani removed this
+      //  else if (e is DioError && e.type == DioErrorType.connectTimeout) {
+      //   print('>>>>>>>>>>>>>>connectTimeout<<<<<<<<<<<<<<<<');
+      //   isConnected = false;
+      //   return null;
+      // } else {
+      //   print('apiError>>>${e.toString()}');
+      //   return null;
+      // }
     }
   }
 
@@ -153,14 +166,22 @@ class RestApi {
     } catch (e) {
       if (e is DioError && e.response != null) {
         return e.response;
-      } else if (e is DioException) {
+      }
+      ///TODO: Emrani added this
+      if (e is DioException) {
         print('>>>>>>>>>>>>>>connectTimeout<<<<<<<<<<<<<<<<');
         isConnected = false;
         return null;
-      } else {
-        print('apiError>>>${e.toString()}');
-        return null;
       }
+      ///TODO: Emrani removed this
+      // else if (e is DioError && e.type == DioErrorType.connectTimeout) {
+      //   print('>>>>>>>>>>>>>>connectTimeout<<<<<<<<<<<<<<<<');
+      //   isConnected = false;
+      //   return null;
+      // } else {
+      //   print('apiError>>>${e.toString()}');
+      //   return null;
+      // }
     }
   }
 
@@ -190,11 +211,22 @@ class RestApi {
     } catch (e) {
       if (e is DioError && e.response != null) {
         return e.response;
-      } else if (e is DioException) {
+      }
+      ///TODO: Emrani added this
+      if (e is DioException) {
         print('>>>>>>>>>>>>>>connectTimeout<<<<<<<<<<<<<<<<');
         isConnected = false;
         return null;
       }
+      ///TODO: Emrani removed this
+      // else if (e is DioError && e.type == DioErrorType.connectTimeout) {
+      //   print('>>>>>>>>>>>>>>connectTimeout<<<<<<<<<<<<<<<<');
+      //   isConnected = false;
+      //   return null;
+      // } else {
+      //   print('apiError>>>${e.toString()}');
+        // return null;
+      // }
     }
   }
 
@@ -224,11 +256,22 @@ class RestApi {
     } catch (e) {
       if (e is DioError && e.response != null) {
         return e.response;
-      } else if (e is DioException) {
+      }
+      ///TODO: Emrani added this
+      if (e is DioException) {
         print('>>>>>>>>>>>>>>connectTimeout<<<<<<<<<<<<<<<<');
         isConnected = false;
         return null;
       }
+      ///TODO: Emrani removed this
+      // else if (e is DioError && e.type == DioErrorType.connectTimeout) {
+      //   print('>>>>>>>>>>>>>>connectTimeout<<<<<<<<<<<<<<<<');
+      //   isConnected = false;
+      //   return null;
+      // } else {
+      //   print('apiError>>>${e.toString()}');
+      //   return null;
+      // }
     }
   }
 

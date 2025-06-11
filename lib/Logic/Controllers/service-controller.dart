@@ -36,7 +36,9 @@ class ServiceController extends GetxController {
         for (var json in response.data['data']['tags']) {
           Tag tag = Tag.fromJson(json);
           providerTags.add(tag);
+          serviceTags.add(tag);
         }
+        serviceTags.sort((a, b) => b.orderIndex!.compareTo(a.orderIndex!));
       },
       printResponse: true,
     );
@@ -120,6 +122,10 @@ class ServiceController extends GetxController {
             services[service.id!] = service;
             categories[categoryId]!.serviceIds.add(service.id!);
           }
+          categories[categoryId]!.serviceIds.sort(
+            (a, b) =>
+                services[b]!.orderIndex!.compareTo(services[a]!.orderIndex!),
+          );
         },
         printResponse: true,
       );
@@ -149,12 +155,10 @@ class ServiceController extends GetxController {
           services[service.id!] = service;
           searchedServices.add(service.id!);
         }
-        List<Service> list = services.values.toList();
-        list.sort((a, b) => b.orderIndex!.compareTo(a.orderIndex!));
-        services = <int, Service>{};
-        list.forEach((element) {
-          services[element.id!] = element;
-        });
+        searchedServices.sort(
+          (a, b) =>
+              services[b]!.orderIndex!.compareTo(services[a]!.orderIndex!),
+        );
       },
       printResponse: true,
     );
@@ -188,6 +192,10 @@ class ServiceController extends GetxController {
             services[service.id!] = service;
             ServiceController.services[serviceID]!.relatedIds.add(service.id!);
           }
+          ServiceController.services[serviceID]!.relatedIds.sort(
+            (a, b) =>
+                services[b]!.orderIndex!.compareTo(services[a]!.orderIndex!),
+          );
         },
       );
       AppController.isLoading.value = false;

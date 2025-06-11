@@ -74,38 +74,41 @@ class OrderIndex extends StatelessWidget {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                '${ServiceController.services[order.serviceId]!.title}',
-                                                style: AppController.fontStyle(
-                                                  fontTypes.heading3,
-                                                  itemColor1,
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  '${ServiceController.services[order.serviceId]!.title}',
+                                                  style:
+                                                      AppController.fontStyle(
+                                                        fontTypes.heading3,
+                                                        itemColor1,
+                                                      ),
                                                 ),
-                                              ),
-                                              SizedBox(height: 10),
-                                              Row(
-                                                children: [
-                                                  Img(
-                                                    order.stateIcon!,
-                                                    width: 18,
-                                                    height: 18,
-                                                    color: order.stateColor,
-                                                  ),
-                                                  SizedBox(width: 10),
-                                                  Text(
-                                                    'وضعیت : ${order.stateTitle}',
-                                                    style:
-                                                        AppController.fontStyle(
-                                                          fontTypes.heading5,
-                                                          order.stateColor!,
-                                                        ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
+                                                SizedBox(height: 10),
+                                                Row(
+                                                  children: [
+                                                    Img(
+                                                      order.stateIcon!,
+                                                      width: 18,
+                                                      height: 18,
+                                                      color: order.stateColor,
+                                                    ),
+                                                    SizedBox(width: 10),
+                                                    Text(
+                                                      'وضعیت : ${order.stateTitle}',
+                                                      style:
+                                                          AppController.fontStyle(
+                                                            fontTypes.heading5,
+                                                            order.stateColor!,
+                                                          ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                           Img(
                                             ServiceController
@@ -146,7 +149,7 @@ class OrderIndex extends StatelessWidget {
                                                   Expanded(
                                                     child: Text(
                                                       order.statusPay == 0
-                                                          ? 'این سفارش بدون پرداخت ثبت شده است . جهت تکمیل فرآیند درخواست به استادین اقدام به پرداخت نمایید .'
+                                                          ? 'این سفارش بدون پرداخت ثبت شده است . جهت تکمیل فرآیند درخواست به اساتید اقدام به پرداخت نمایید .'
                                                           : 'درصورتی که علاوه بر این خدمات درخواست دیگری از استاد دارید , آن را اینجا ثبت کنید :',
                                                       style:
                                                           AppController.fontStyle(
@@ -436,7 +439,7 @@ class OrderIndex extends StatelessWidget {
                                                       ),
                                                       SizedBox(width: 10),
                                                       Text(
-                                                        'تعداد پیشنهادات استادین : ',
+                                                        'تعداد پیشنهادات اساتید : ',
                                                         style:
                                                             AppController.fontStyle(
                                                               fontTypes
@@ -594,117 +597,124 @@ class OrderIndex extends StatelessWidget {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Row(
-                                                        children: [
-                                                          Text(
-                                                            'نام استاد : ',
-                                                            style:
-                                                                AppController.fontStyle(
-                                                                  fontTypes
-                                                                      .heading5,
-                                                                  itemColor3,
-                                                                ),
-                                                          ),
-                                                          Text(
-                                                            '${order.provider!.fname} ${order.provider!.lname}',
-                                                            style:
-                                                                AppController.fontStyle(
+                                                  Expanded(
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Row(
+                                                          children: [
+                                                            Text(
+                                                              'نام استاد : ',
+                                                              style:
+                                                                  AppController.fontStyle(
+                                                                    fontTypes
+                                                                        .heading5,
+                                                                    itemColor3,
+                                                                  ),
+                                                            ),
+                                                            Expanded(
+                                                              child: Text(
+                                                                '${order.provider!.fname} ${order.provider!.lname}',
+                                                                style: AppController.fontStyle(
                                                                   fontTypes
                                                                       .heading4,
                                                                   itemColor1,
                                                                 ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      SizedBox(height: 10),
-                                                      Btn(
-                                                        btnType.mini,
-                                                        width: 150,
-                                                        height: 30,
-                                                        radius: 30,
-                                                        fontType:
-                                                            fontTypes.heading5,
-                                                        text: 'مشاهده مشخصات',
-                                                        onClick: () {
-                                                          Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                              builder:
-                                                                  (
-                                                                    builder,
-                                                                  ) => ProviderIndex(
-                                                                    order
-                                                                        .provider!,
-                                                                    hasSelectBtn:
-                                                                        false,
-                                                                  ),
+                                                                maxLines: 2,
+                                                              ),
                                                             ),
-                                                          );
-                                                        },
-                                                      ),
-                                                      SizedBox(height: 10),
-                                                      order.typeCall == null ||
-                                                              order.typeCall ==
-                                                                  0
-                                                          ? Container()
-                                                          : InkWell(
-                                                            onTap: () {
-                                                              if (order
-                                                                      .typeCall ==
-                                                                  1)
-                                                                launchUrlString(
-                                                                  'tel:${order.provider!.mobile}',
-                                                                );
-                                                              else
-                                                                OrderController.callPrivate(
-                                                                  orderId,
-                                                                );
-                                                            },
-                                                            child: Container(
-                                                              width: 150,
-                                                              height: 30,
-                                                              decoration: BoxDecoration(
-                                                                color: appColor
-                                                                    .withOpacity(
-                                                                      0.15,
-                                                                    ),
-                                                                borderRadius:
-                                                                    BorderRadius.circular(
-                                                                      30,
+                                                          ],
+                                                        ),
+                                                        SizedBox(height: 10),
+                                                        Btn(
+                                                          btnType.mini,
+                                                          width: 150,
+                                                          height: 30,
+                                                          radius: 30,
+                                                          fontType:
+                                                              fontTypes
+                                                                  .heading5,
+                                                          text: 'مشاهده مشخصات',
+                                                          onClick: () {
+                                                            Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                builder:
+                                                                    (
+                                                                      builder,
+                                                                    ) => ProviderIndex(
+                                                                      order
+                                                                          .provider!,
+                                                                      hasSelectBtn:
+                                                                          false,
                                                                     ),
                                                               ),
-                                                              alignment:
-                                                                  Alignment
-                                                                      .center,
-                                                              child: Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceEvenly,
-                                                                children: [
-                                                                  Text(
-                                                                    '${order.typeCall == 1 ? order.provider!.mobile : 'تماس'}',
-                                                                    style: AppController.fontStyle(
-                                                                      fontTypes
-                                                                          .heading5,
-                                                                      appColor,
-                                                                    ),
-                                                                  ),
-                                                                  Icon(
-                                                                    Icons.call,
-                                                                    color:
+                                                            );
+                                                          },
+                                                        ),
+                                                        SizedBox(height: 10),
+                                                        order.typeCall ==
+                                                                    null ||
+                                                                order.typeCall ==
+                                                                    0
+                                                            ? Container()
+                                                            : InkWell(
+                                                              onTap: () {
+                                                                if (order
+                                                                        .typeCall ==
+                                                                    1)
+                                                                  launchUrlString(
+                                                                    'tel:${order.provider!.mobile}',
+                                                                  );
+                                                                else
+                                                                  OrderController.callPrivate(
+                                                                    orderId,
+                                                                  );
+                                                              },
+                                                              child: Container(
+                                                                width: 150,
+                                                                height: 30,
+                                                                decoration: BoxDecoration(
+                                                                  color: appColor
+                                                                      .withOpacity(
+                                                                        0.15,
+                                                                      ),
+                                                                  borderRadius:
+                                                                      BorderRadius.circular(
+                                                                        30,
+                                                                      ),
+                                                                ),
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center,
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceEvenly,
+                                                                  children: [
+                                                                    Text(
+                                                                      '${order.typeCall == 1 ? order.provider!.mobile : 'تماس'}',
+                                                                      style: AppController.fontStyle(
+                                                                        fontTypes
+                                                                            .heading5,
                                                                         appColor,
-                                                                    size: 15,
-                                                                  ),
-                                                                ],
+                                                                      ),
+                                                                    ),
+                                                                    Icon(
+                                                                      Icons
+                                                                          .call,
+                                                                      color:
+                                                                          appColor,
+                                                                      size: 15,
+                                                                    ),
+                                                                  ],
+                                                                ),
                                                               ),
                                                             ),
-                                                          ),
-                                                    ],
+                                                      ],
+                                                    ),
                                                   ),
                                                   Img(
                                                     order.provider!.avatar!,

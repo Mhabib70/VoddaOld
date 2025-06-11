@@ -54,106 +54,142 @@ class _ProviderItemState extends State<ProviderItem> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      Stack(
-                        children: [
-                          Img(
-                            widget.providerModel.avatar ?? '',
-                            width: 55,
-                            height: 55,
-                            isNetwork: true,
-                            radius: 50,
-                          ),
-                          Positioned(
-                            top: 75,
-                            right: 0,
-                            child: Container(
-                              width: 15,
-                              height: 15,
-                              decoration: BoxDecoration(
-                                border: Border.all(color: whiteColor, width: 1),
-                                borderRadius: BorderRadius.circular(10),
-                                color:
-                                    widget.providerModel.online == 1
-                                        ? successColor
-                                        : itemColor4,
-                              ),
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Stack(
+                          children: [
+                            Img(
+                              widget.providerModel.avatar ?? '',
+                              width: 55,
+                              height: 55,
+                              isNetwork: true,
+                              radius: 50,
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(width: 10),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            '${widget.providerModel.fname} ${widget.providerModel.lname} (${widget.providerModel.typeTitle})',
-                            style: AppController.fontStyle(
-                              fontTypes.heading3,
-                              itemColor2,
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.star_outline,
-                                size: 20,
-                                color: appColor,
-                              ),
-                              SizedBox(width: 5),
-                              Text(
-                                'امتیاز : ${widget.providerModel.rate}',
-                                style: AppController.fontStyle(
-                                  fontTypes.heading5,
-                                  itemColor4,
+                            Positioned(
+                              top: 75,
+                              right: 0,
+                              child: Container(
+                                width: 15,
+                                height: 15,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: whiteColor,
+                                    width: 1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10),
+                                  color:
+                                      widget.providerModel.online == 1
+                                          ? successColor
+                                          : itemColor4,
                                 ),
                               ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    '${widget.providerModel.fname} ${widget.providerModel.lname}',
+                                    style: AppController.fontStyle(
+                                      fontTypes.heading3,
+                                      itemColor2,
+                                    ),
+                                    maxLines: 2,
+                                  ),
+                                  SizedBox(width: 5),
+                                  Img(
+                                    sucssessDrawerIcon,
+                                    color:
+                                        widget.providerModel.typeTitle == 'ویژه'
+                                            ? Colors.blue[400]
+                                            : widget.providerModel.typeTitle ==
+                                                'حرفه ای'
+                                            ? appColor
+                                            : Colors.red,
+                                    width: 30,
+                                    height: 30,
+                                  ),
+                                  SizedBox(width: 5),
+                                  Text(
+                                    '${widget.providerModel.typeTitle}',
+                                    style: AppController.fontStyle(
+                                      fontTypes.heading3,
+                                      itemColor2,
+                                    ),
+                                    maxLines: 2,
+                                  ),
+
+                                  // Icon(Icons.check_circle_rounded,color: widget.providerModel.typeTitle=='ویژه'?Colors.blue:widget.providerModel.typeTitle=='حرفه ای'?Colors.green:Colors.yellow,),
+                                ],
+                              ),
+                              SizedBox(height: 5),
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.star_outline,
+                                    size: 20,
+                                    color: appColor,
+                                  ),
+                                  SizedBox(width: 5),
+                                  Text(
+                                    'امتیاز : ${widget.providerModel.rate}',
+                                    style: AppController.fontStyle(
+                                      fontTypes.heading5,
+                                      itemColor4,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              widget.providerModel.price == null
+                                  ? Container()
+                                  : Row(
+                                    children: [
+                                      Icon(
+                                        Icons.monetization_on_outlined,
+                                        size: 15,
+                                        color: appColor,
+                                      ),
+                                      SizedBox(width: 5),
+                                      Text(
+                                        '${AppController.priceFormat(int.parse(widget.providerModel.price!))} تومان',
+                                        style: AppController.fontStyle(
+                                          fontTypes.heading5,
+                                          itemColor4,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                              widget.providerModel.time == null
+                                  ? Container()
+                                  : Row(
+                                    children: [
+                                      Icon(
+                                        Icons.timer_sharp,
+                                        size: 15,
+                                        color: appColor,
+                                      ),
+                                      SizedBox(width: 5),
+                                      Text(
+                                        '${((widget.providerModel.time)! / 60).toInt() > 0 ? '${((widget.providerModel.time)! / 60).toInt()} ساعت ' : ''} ${((widget.providerModel.time)! / 60).toInt() > 0 && (widget.providerModel.time)! % 60 > 0 ? 'و' : ''} ${(widget.providerModel.time)! % 60 > 0 ? '${(widget.providerModel.time)! % 60} دقیقه' : ''}',
+                                        style: AppController.fontStyle(
+                                          fontTypes.heading5,
+                                          itemColor4,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                             ],
                           ),
-                          widget.providerModel.price == null
-                              ? Container()
-                              : Row(
-                                children: [
-                                  Icon(
-                                    Icons.monetization_on_outlined,
-                                    size: 15,
-                                    color: appColor,
-                                  ),
-                                  SizedBox(width: 5),
-                                  Text(
-                                    '${AppController.priceFormat(int.parse(widget.providerModel.price!))} تومان',
-                                    style: AppController.fontStyle(
-                                      fontTypes.heading5,
-                                      itemColor4,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                          widget.providerModel.time == null
-                              ? Container()
-                              : Row(
-                                children: [
-                                  Icon(
-                                    Icons.timer_sharp,
-                                    size: 15,
-                                    color: appColor,
-                                  ),
-                                  SizedBox(width: 5),
-                                  Text(
-                                    '${((widget.providerModel.time)! / 60).toInt() > 0 ? '${((widget.providerModel.time)! / 60).toInt()} ساعت ' : ''} ${((widget.providerModel.time)! / 60).toInt() > 0 && (widget.providerModel.time)! % 60 > 0 ? 'و' : ''} ${(widget.providerModel.time)! % 60 > 0 ? '${(widget.providerModel.time)! % 60} دقیقه' : ''}',
-                                    style: AppController.fontStyle(
-                                      fontTypes.heading5,
-                                      itemColor4,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                        ],
-                      ),
-                    ],
+                        ),
+                      ],
+                    ),
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,

@@ -172,7 +172,7 @@ class ServiceIndex extends StatelessWidget {
                                       ),
                                       IconItem(
                                         callIcon,
-                                        'تعداد استادین :',
+                                        'تعداد اساتید :',
                                         '${serviceModel.providerCount}',
                                       ),
                                     ],
@@ -210,62 +210,35 @@ class ServiceIndex extends StatelessWidget {
                               SizedBox(height: 10),
                               DescriptionItem(serviceModel.description),
                               SizedBox(height: 20),
-                              serviceModel.relatedIds.length == 0
-                                  ? Container()
-                                  : Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'سرویس های مرتبط',
-                                        style: AppController.fontStyle(
-                                          fontTypes.heading5,
-                                          itemColor2,
-                                        ),
-                                      ),
-                                      SizedBox(height: 10),
-                                      ScrollConfiguration(
-                                        behavior: ScrollConfiguration.of(
-                                          context,
-                                        ).copyWith(
-                                          dragDevices: {
-                                            PointerDeviceKind.touch,
-                                            PointerDeviceKind.mouse,
-                                          },
-                                        ),
-                                        child: SingleChildScrollView(
-                                          scrollDirection: Axis.horizontal,
-                                          child: Row(
-                                            children: [
-                                              Wrap(
-                                                direction: Axis.vertical,
-                                                children: [
-                                                  for (
-                                                    int i = 0;
-                                                    i <
-                                                        serviceModel
-                                                            .relatedIds
-                                                            .length;
-                                                    i++
-                                                  )
-                                                    if (ServiceController
-                                                        .services[serviceModel
-                                                            .relatedIds[i]]!
-                                                        .hasUserCity())
-                                                      SliderItem1(
-                                                        ServiceController
-                                                            .services[serviceModel
-                                                            .relatedIds[i]]!,
-                                                        width: 350,
-                                                      ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                              // serviceModel.relatedIds.length==0?Container():Column(
+                              //   crossAxisAlignment: CrossAxisAlignment.start,
+                              //   children: [
+                              //     Text('سرویس های مرتبط',style: AppController.fontStyle(fontTypes.heading5, itemColor2),),
+                              //     SizedBox(height: 10,),
+                              //     ScrollConfiguration(
+                              //         behavior: ScrollConfiguration.of(context).copyWith(
+                              //           dragDevices: {
+                              //             PointerDeviceKind.touch,
+                              //             PointerDeviceKind.mouse,
+                              //           },
+                              //         ),
+                              //         child: SingleChildScrollView(
+                              //           scrollDirection: Axis.horizontal,
+                              //           child: Row(
+                              //             children: [
+                              //               Wrap(
+                              //                 direction: Axis.vertical,
+                              //                 children: [
+                              //                   for (int i = 0; i < serviceModel.relatedIds.length; i++)
+                              //                     if(ServiceController.services[serviceModel.relatedIds[i]]!.hasUserCity())
+                              //                     SliderItem1(ServiceController.services[serviceModel.relatedIds[i]]!,width: 350,),
+                              //                 ],
+                              //               ),
+                              //             ],
+                              //           ),
+                              //         )),
+                              //   ],
+                              // )
                               // ListMenuItem(successIcon, 'راهنمای سفارش و دریافت خدمات',onClick: (){
                               //   launchUrlString(AppController.setting['guide_link']);
                               // },),

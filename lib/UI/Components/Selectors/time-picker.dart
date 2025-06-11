@@ -45,9 +45,8 @@ class _TimePickerState extends State<TimePicker> {
               ),
               entryModeIconColor: itemColor2,
             ),
-            textTheme: TextTheme(
-              // overline: TextStyle(color: itemColor2)
-            ),
+            ///TODO: Emrani removed this
+            // textTheme: TextTheme(overline: TextStyle(color: itemColor2)),
             textButtonTheme: TextButtonThemeData(
               style: ButtonStyle(
                 backgroundColor: MaterialStateColor.resolveWith(

@@ -158,7 +158,8 @@ class SliderTypes extends StatelessWidget {
                           .where(
                             (element) =>
                                 tagModel.providerIds.contains(element.id) &&
-                                element.hasUserCity(),
+                                element.hasUserCity() &&
+                                element.online == 1,
                           ))
                         SliderItem3(provider),
                       SizedBox(width: paddingSize),
@@ -167,8 +168,6 @@ class SliderTypes extends StatelessWidget {
                 ),
               )
               : Container(),
-
-          SizedBox(height: 40),
         ],
       ),
     );

@@ -23,34 +23,45 @@ class _SelectDateState extends State<SelectDate> {
   OrderController orderController = Get.put(OrderController());
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return orderController.dates.length > 0
         ? Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ScrollConfiguration(
-              behavior: ScrollConfiguration.of(context).copyWith(
-                dragDevices: {PointerDeviceKind.touch, PointerDeviceKind.mouse},
-              ),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                reverse: true,
-                child: Container(
-                  height: 140,
-                  child: Row(
-                    textDirection: TextDirection.ltr,
-                    children: [
-                      for (var date in orderController.dates.keys)
-                        DateItem(
-                          orderController.dates[date]!,
-                          selected: orderController.order.date == date,
-                          onClick: () {
-                            setState(() {
-                              orderController.order.time = null;
-                              orderController.order.date = date;
-                            });
-                          },
-                        ),
-                    ],
+            Container(
+              height: 140,
+              color: Colors.cyanAccent.withOpacity(0.1),
+              width: size.width,
+              child: ScrollConfiguration(
+                behavior: ScrollConfiguration.of(context).copyWith(
+                  dragDevices: {
+                    PointerDeviceKind.touch,
+                    PointerDeviceKind.mouse,
+                  },
+                ),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  reverse: true,
+                  child: Container(
+                    // color: Colors.red,
+                    alignment: Alignment.center,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      textDirection: TextDirection.ltr,
+                      children: [
+                        for (var date in orderController.dates.keys)
+                          DateItem(
+                            orderController.dates[date]!,
+                            selected: orderController.order.date == date,
+                            onClick: () {
+                              setState(() {
+                                orderController.order.time = null;
+                                orderController.order.date = date;
+                              });
+                            },
+                          ),
+                      ],
+                    ),
                   ),
                 ),
               ),

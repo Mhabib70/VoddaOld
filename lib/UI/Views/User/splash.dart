@@ -22,7 +22,7 @@ class _SplashState extends State<Splash> {
   void initState() {
     super.initState();
     MainController.getInitData();
-    _controller = VideoPlayerController.asset('assets/media/mobin.mp4')
+    _controller = VideoPlayerController.asset('assets/media/splash.mp4')
       ..initialize().then((_) {
         // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         setState(() {
@@ -52,29 +52,30 @@ class _SplashState extends State<Splash> {
               children: [
                 Expanded(
                   child:
-                      kIsWeb
-                          ? Uri.base.queryParametersAll.length == 0
-                              ? Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  // Img(appLogo,width: 180,height: 180,),
-                                  // SizedBox(
-                                  //   height: 50,
-                                  // ),
-                                  // Text(
-                                  //   '${appTitle}',
-                                  //   style: AppController.fontStyle(
-                                  //       fontTypes.heading1, itemColor1),
-                                  // )
-                                ],
-                              )
-                              : Container()
-                          : Center(
-                            child: Container(
-                              height: 350,
-                              child: VideoPlayer(_controller),
-                            ),
-                          ),
+                      // kIsWeb?
+                      // !kIsWeb ||
+                      Uri.base.queryParametersAll.length == 0
+                          ? Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              // Img(appLogo,width: 180,height: 180,),
+                              // SizedBox(
+                              //   height: 50,
+                              // ),
+                              // Text(
+                              //   '${appTitle}',
+                              //   style: AppController.fontStyle(
+                              //       fontTypes.heading1, itemColor1),
+                              // )
+                            ],
+                          )
+                          : Container(),
+                  // :
+                  // Center(
+                  //   child: Container(
+                  //       height: 350,
+                  //       child: VideoPlayer(_controller)),
+                  // ),
                 ),
 
                 Container(
@@ -85,11 +86,17 @@ class _SplashState extends State<Splash> {
                     strokeWidth: 6,
                   ),
                 ),
-                SizedBox(height: 80),
-                // Container(
-                //   padding: EdgeInsets.only(top:50,bottom: 50),
-                //   child: Text('درحال بارگذاری ...',style: AppController.fontStyle(fontTypes.heading4, itemColor2),),
-                // )
+                // SizedBox(height: 80,),
+                Container(
+                  padding: EdgeInsets.only(top: 50, bottom: 50),
+                  child: Text(
+                    'درحال بارگذاری ...',
+                    style: AppController.fontStyle(
+                      fontTypes.heading4,
+                      Colors.white,
+                    ),
+                  ),
+                ),
               ],
             ),
             Container(

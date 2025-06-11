@@ -33,6 +33,7 @@ class NewAddress extends StatelessWidget {
       backgroundColor: backgroundColor,
       body: Stack(
         children: [
+          ///TODO: Emrani removed this
           // MapirMap(
           //   apiKey: mapApiKey,
           //   options: MapOptions(

@@ -21,7 +21,7 @@ class OrderItem extends StatelessWidget {
     return Container(
       width: maxItemWidth,
       padding: EdgeInsets.only(left: paddingSize, right: paddingSize),
-      height: 165,
+      // height: 165,
       child: Column(
         children: [
           InkWell(
@@ -60,6 +60,7 @@ class OrderItem extends StatelessWidget {
                                 itemColor1,
                               ),
                               overflow: TextOverflow.ellipsis,
+                              maxLines: 3,
                             ),
                             SizedBox(height: 5),
                             Row(

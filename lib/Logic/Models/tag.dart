@@ -9,6 +9,7 @@ class Tag {
   String? createdAt;
   String? updatedAt;
   int? type;
+  int? orderIndex;
   List<int> serviceIds = [];
   List<int> providerIds = [];
 
@@ -26,6 +27,7 @@ class Tag {
     title = json['title'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+    orderIndex = json['order_index'];
     type = json['type'];
     if (json['services'] != null) {
       for (var serviceJson in json['services']) {
@@ -35,6 +37,11 @@ class Tag {
           this.serviceIds.add(serviceModel.id!);
         }
       }
+      serviceIds.sort(
+        (a, b) => ServiceController.services[b]!.orderIndex!.compareTo(
+          ServiceController.services[a]!.orderIndex!,
+        ),
+      );
     }
     if (json['providers'] != null) {
       for (var providerJson in json['providers']) {

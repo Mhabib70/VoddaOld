@@ -32,6 +32,7 @@ class Provider {
   int? time;
   String? orderDescription;
   String? cv;
+  String? city;
   bool? isMark;
 
   Map<int, CvFile> cvFiles = <int, CvFile>{};
@@ -54,6 +55,7 @@ class Provider {
     skill = json['skill'];
     provinceId = json['province_id'];
     cityId = json['city_id'];
+    city = MainController.provinces[provinceId]!.cities[cityId]!.name;
     serviceCount = json['service_count'];
     online = json['online'];
 
@@ -79,6 +81,11 @@ class Provider {
         ServiceController.services[service.id!] = service;
         serviceIds.add(service.id!);
       }
+      serviceIds.sort(
+        (a, b) => ServiceController.services[b]!.orderIndex!.compareTo(
+          ServiceController.services[a]!.orderIndex!,
+        ),
+      );
     }
     print('comments>>>>${json['comments']}');
     if (json['comments'] != null) {

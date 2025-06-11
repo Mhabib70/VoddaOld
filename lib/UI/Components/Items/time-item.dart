@@ -19,30 +19,25 @@ class TimeItem extends StatelessWidget {
         onClick!();
       },
       child: Container(
-        width: 130,
+        width: 110,
         height: 40,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
-          border: Border.all(width: 2, color: selected ? appColor : itemColor5),
-          color: Colors.white,
+          border: Border.all(width: 2, color: appColor),
+          color: selected ? appColor : Colors.white,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Text(
-              time,
+              time.split('-')[0],
               style: AppController.fontStyle(
                 fontTypes.heading4,
-                selected ? appColor : itemColor4,
+                selected ? Colors.white : appColor,
               ),
               textDirection: TextDirection.ltr,
             ),
-            Img(
-              clock2Icon,
-              width: 20,
-              height: 20,
-              color: selected ? appColor : itemColor4,
-            ),
+            // Img(clock2Icon,width: 20,height: 20,color: selected?appColor:itemColor4,),
           ],
         ),
       ),

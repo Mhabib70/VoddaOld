@@ -1,10 +1,11 @@
 import 'dart:typed_data';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 // import 'package:isolated_worker/isolated_worker.dart';
 import 'package:vodda_old/Logic/Controllers/app-controller.dart';
-import 'package:vodda_old/Logic/Controllers/user-controller.dart';
+// import 'package:vodda_old/Logic/Controllers/user-controller.dart';
 import 'package:vodda_old/Public/images.dart';
 import 'package:vodda_old/Public/styles.dart';
 import 'package:vodda_old/UI/Components/Buttons/picker-btn.dart';
@@ -25,7 +26,18 @@ class FilePicker extends StatefulWidget {
 
 class _FilePickerState extends State<FilePicker> {
   chooseFile(ImageSource imageSource) async {
-    if ((!kIsWeb && await Permission.storage.request().isGranted) || kIsWeb) {
+    var accepted = false;
+    if (!kIsWeb) {
+      final androidInfo = await DeviceInfoPlugin().androidInfo;
+
+      if (androidInfo.version.sdkInt <= 32 &&
+          await Permission.storage.request().isGranted) {
+        accepted = true;
+      } else if (await Permission.photos.request().isGranted) {
+        accepted = true;
+      }
+    }
+    if (kIsWeb || accepted) {
       final ImagePicker _picker = ImagePicker();
       XFile? image = await _picker.pickImage(
         source: imageSource,
@@ -66,6 +78,7 @@ class _FilePickerState extends State<FilePicker> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return DottedBorder(
+      ///TODO: Emrani removed this
       // color: itemColor5,
       // strokeWidth: 2,
       // radius: Radius.circular(10),

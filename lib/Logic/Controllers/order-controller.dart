@@ -79,7 +79,7 @@ class OrderController extends GetxController {
         order.priceValue = int.parse(response!.data['data']['price']);
         order.timespan = response.data['data']['time'];
         //sometimes laravel sends morph relations in map instead of list
-        if (response.data['data']['questions'].runtimeType == Map) {
+        try {
           Map.from(response.data['data']['questions']).forEach((key, value) {
             Question question = Question.fromJson(value);
             questions.add(question);
@@ -93,7 +93,7 @@ class OrderController extends GetxController {
             }
             order.answers.add(answer);
           });
-        } else {
+        } catch (e) {
           for (var json in response.data['data']['questions']) {
             Question question = Question.fromJson(json);
             questions.add(question);
@@ -108,6 +108,12 @@ class OrderController extends GetxController {
             order.answers.add(answer);
           }
         }
+        // if(response.data['data']['questions'].runtimeType==Map){
+        //
+        // }
+        // else{
+        //
+        // }
         for (int i = 0; i < questions.length; i++) {
           if (questions[i].targetQuestionId != 0 &&
               questions[i].targetQuestionId != -1 &&
@@ -402,13 +408,16 @@ class OrderController extends GetxController {
         order.id = o.id;
         order.code = o.code;
         statusPay.value = o.statusPay!;
-        if (ServiceController.services[order.serviceId]!.typePay == 0 ||
-            ServiceController.services[order.serviceId]!.typePay == 1)
-          if ((order.priceValue + addPrice) > 0)
-            await paymentOrder(order, 0);
-          else
-            statusPay.value = 1;
-        step = 5;
+        if ((ServiceController.services[order.serviceId]!.typePay == 0 ||
+                ServiceController.services[order.serviceId]!.typePay == 1) &&
+            (order.priceValue + addPrice) > 0)
+          await paymentOrder(order, 0);
+        else {
+          statusPay.value = 1;
+          step = 5;
+          print('asdasdasd>>>${step}');
+        }
+
         UserController.getUser();
       },
       printResponse: true,
@@ -426,18 +435,22 @@ class OrderController extends GetxController {
         'addition_id': additionId,
       },
     );
-    RestApi.responseHandler(
+    await RestApi.responseHandler(
       response: response,
-      successCallback: () {
+      successCallback: () async {
         Order order = Order.fromJson(response!.data['data']['order']);
         statusPay.value = order.statusPay!;
         myOrders[order.id!] = order;
         //update:
         if (response.data['data']['pay_link'] != null)
-          launchUrlString(
+          await launchUrlString(
             baseUrl + response.data['data']['pay_link'],
             mode: LaunchMode.externalApplication,
           );
+        await Future.delayed(Duration(seconds: 1), () {
+          OrderController o = Get.put(OrderController());
+          o.step = 5;
+        });
       },
       printResponse: true,
     );
@@ -906,7 +919,11 @@ class OrderController extends GetxController {
     timerDuration.value = Duration(seconds: 0);
     if (order.state == 2 &&
         ServiceController.services[order.serviceId]!.typePlace == 2) {
-      DateTime dateTime = DateTime.parse('${order.date} ${order.time}');
+      String time =
+          order.time!.length > 2
+              ? '${order.time}'
+              : '${order.time!.padLeft(2, '0')}:00';
+      DateTime dateTime = DateTime.parse('${order.date} ${time}');
 
       if (dateTime.difference(DateTime.now()).inSeconds > 0) {
         timerDuration.value = Duration(

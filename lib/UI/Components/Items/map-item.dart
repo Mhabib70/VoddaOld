@@ -54,6 +54,7 @@ class MapItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(15),
               child: Stack(
                 children: [
+                  ///TODO: Emrani removed this
                   // MapirMap(
                   //   apiKey: mapApiKey,
                   //   options: MapOptions(center: LatLng(lat, long), zoom: 16.0),

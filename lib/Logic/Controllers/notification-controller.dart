@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'dart:async';
 import 'dart:ui';
@@ -18,6 +19,7 @@ import 'package:vodda_old/Public/styles.dart';
 import 'package:vodda_old/UI/Components/Popups/snackbar.dart';
 import 'package:vodda_old/laravel_echo/laravel_echo.dart';
 import 'package:vodda_old/main.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:socket_io_client/socket_io_client.dart' as IO;
@@ -126,13 +128,7 @@ class NotificationController extends GetxController
         }
       }
     });
-    Connectivity().onConnectivityChanged.listen((event) {
-      if (event.first == ConnectivityResult.none) {
-        echo.leaveChannel('user-channel${userToken}');
 
-        socket.clearListeners();
-      }
-    });
     // Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
     //   if (result == ConnectivityResult.none) {
     //     echo.leaveChannel('user-channel${userToken}');
@@ -140,6 +136,9 @@ class NotificationController extends GetxController
     //     socket.clearListeners();
     //   }
     // });
+    // }
+
+    // _isinitial=false;
   }
 
   static Future<void> initBackgroundService() async {
@@ -363,11 +362,19 @@ class NotificationController extends GetxController
   void onInit() async {
     super.onInit();
     WidgetsBinding.instance.addObserver(this);
-    print('onInitNotif');
-    initSocket(isBackgroundSocket: false);
-    if (!kIsWeb) await initBackgroundService();
-
-    backgroundService.invoke('stopService');
+    if (kIsWeb) {
+      print('onInitNotif');
+      initSocket(isBackgroundSocket: false);
+    } else {
+      final androidInfo = await DeviceInfoPlugin().androidInfo;
+      if (androidInfo.version.sdkInt <= 32 ||
+          await Permission.notification.request().isGranted) {
+        print('onInitNotif');
+        initSocket(isBackgroundSocket: false);
+        await initBackgroundService();
+        backgroundService.invoke('stopService');
+      }
+    }
   }
 
   @override

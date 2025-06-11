@@ -18,7 +18,7 @@ import 'package:vodda_old/Public/config.dart';
 import 'package:vodda_old/Public/images.dart';
 import 'package:vodda_old/Public/styles.dart';
 import 'package:vodda_old/UI/Components/General/img.dart';
-import 'package:vodda_old/UI/Views/Question/question-index.dart';
+// import 'package:vodda_old/UI/Views/Question/question-index.dart';
 
 class SelectProviderAddress extends StatefulWidget {
   SelectProviderAddress({Key? key}) : super(key: key);
@@ -34,25 +34,28 @@ class _SelectProviderAddressState extends State<SelectProviderAddress> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
+        ///TODO: Emrani removed this
         // MapirMap(
         //   apiKey: mapApiKey,
-        //   options: MapOptions(center: UserController.myPosition, zoom: 14.0),
+        //   options: MapOptions(center: UserController.myPosition, zoom: 11.0),
         //   mapController: controller,
 
         //   layers: [
         //     MarkerLayerOptions(
         //       markers: [
         //         for (Provider provider in OrderController.providers.values)
-        //           if (provider.hasUserCity())
+        //           if (provider.hasUserCity() &&
+        //               provider.lat != null &&
+        //               provider.long != null)
         //             Marker(
-        //               width: 50.0,
-        //               height: 50.0,
+        //               width: 40.0,
+        //               height: 40.0,
         //               point: LatLng(provider.lat!, provider.long!),
         //               builder:
         //                   (ctx) => Img(
         //                     mapIcon,
-        //                     width: 50,
-        //                     height: 50,
+        //                     width: 40,
+        //                     height: 40,
         //                     color: appColor,
         //                     onClick: () {
         //                       showAlertDialog(
@@ -60,12 +63,39 @@ class _SelectProviderAddressState extends State<SelectProviderAddress> {
         //                         title: 'مشخصات متخصص',
         //                         child: Column(
         //                           children: [
-        //                             Text(
-        //                               '${provider.fname} ${provider.lname}',
-        //                               style: AppController.fontStyle(
-        //                                 fontTypes.heading3,
-        //                                 itemColor1,
+        //                             Container(
+        //                               margin: EdgeInsets.only(
+        //                                 left: 10,
+        //                                 right: 10,
         //                               ),
+        //                               child: Text(
+        //                                 '${provider.fname} ${provider.lname}',
+        //                                 style: AppController.fontStyle(
+        //                                   fontTypes.heading3,
+        //                                   itemColor1,
+        //                                 ),
+        //                                 maxLines: 2,
+        //                                 textAlign: TextAlign.center,
+        //                               ),
+        //                             ),
+        //                             Row(
+        //                               mainAxisAlignment:
+        //                                   MainAxisAlignment.center,
+        //                               children: [
+        //                                 Icon(
+        //                                   Icons.star,
+        //                                   size: 20,
+        //                                   color: appColor,
+        //                                 ),
+        //                                 SizedBox(width: 5),
+        //                                 Text(
+        //                                   'امتیاز : ${provider.rate}',
+        //                                   style: AppController.fontStyle(
+        //                                     fontTypes.heading5,
+        //                                     itemColor4,
+        //                                   ),
+        //                                 ),
+        //                               ],
         //                             ),
         //                             SizedBox(height: 15),
         //                             if (provider.price != null)
