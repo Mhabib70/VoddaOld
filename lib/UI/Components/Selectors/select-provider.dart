@@ -195,7 +195,7 @@ class _SelectProviderAddressState extends State<SelectProviderAddress> {
           child: InkWell(
             onTap: () async {
               if (kIsWeb) {
-                await UserController.getMyLocation();
+                await Get.find<UserController>().getMyLocation();
                 controller.move(UserController.myPosition, 15);
               } else {
                 Map<Permission, PermissionStatus> statuses =
@@ -204,7 +204,7 @@ class _SelectProviderAddressState extends State<SelectProviderAddress> {
                     .locationWhenInUse
                     .serviceStatus
                     .isEnabled) {
-                  await UserController.getMyLocation();
+                  await Get.find<UserController>().getMyLocation();
                   controller.move(UserController.myPosition, 15);
                 }
               }

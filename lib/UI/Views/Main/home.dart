@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:vodda_old/Logic/Controllers/app-controller.dart';
 import 'package:vodda_old/Logic/Controllers/main-controller.dart';
 import 'package:vodda_old/Logic/Controllers/service-controller.dart';
@@ -16,7 +17,7 @@ import 'package:vodda_old/UI/Views/Main/sub-list.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class Home extends StatelessWidget {
-  Home({Key? key}) : super(key: key);
+  const Home({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -85,29 +86,34 @@ class Home extends StatelessWidget {
               scrollbars: false,
               dragDevices: {PointerDeviceKind.touch, PointerDeviceKind.mouse},
             ),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  for (var json in MainController.setting['socials'])
-                    Padding(
-                      padding: const EdgeInsets.only(right: 15.0),
-                      child: InkWell(
-                        onTap: () {
-                          launchUrlString(json['link']);
-                        },
-                        child: Img(
-                          json['file'],
-                          width: 100,
-                          height: 100,
-                          isNetwork: true,
-                        ),
-                      ),
-                    ),
-                ],
-              ),
+            child: GetBuilder<MainController>(
+              builder: (controller) {
+                return SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (controller.setting.containsKey("socials"))
+                        for (var json in controller.setting['socials'])
+                          Padding(
+                            padding: const EdgeInsets.only(right: 15.0),
+                            child: InkWell(
+                              onTap: () {
+                                launchUrlString(json['link']);
+                              },
+                              child: Img(
+                                json['file'],
+                                width: 100,
+                                height: 100,
+                                isNetwork: true,
+                              ),
+                            ),
+                          ),
+                    ],
+                  ),
+                );
+              },
             ),
           ),
 

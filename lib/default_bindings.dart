@@ -1,0 +1,13 @@
+import 'package:get/get.dart';
+import 'package:vodda_old/Logic/Controllers/main-controller.dart';
+import 'package:vodda_old/Logic/Controllers/service-controller.dart';
+import 'package:vodda_old/Logic/Controllers/user-controller.dart';
+
+class DefaultBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<MainController>(() => MainController(), fenix: true);
+    Get.lazyPut<UserController>(() => UserController(), fenix: true);
+    Get.lazyPut<ServiceController>(() => ServiceController(), fenix: true);
+  }
+}

@@ -1,3 +1,7 @@
+// import 'dart:nativewrappers/_internal/vm/lib/async_patch.dart';
+
+import 'dart:async';
+
 import 'package:flutter/foundation.dart' as web;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,30 +32,34 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class MainController extends GetxController {
-  static Map<String, dynamic> setting = <String, dynamic>{};
-  static List<LinkMenu> sidebarLinks = [];
-  static List<Advertise> ads = [];
-  static List<String> mainSlider = [];
-  static Map<int, Province> provinces = <int, Province>{};
-  static RxList<City> cities = <City>[].obs;
+  Map<String, dynamic> setting = <String, dynamic>{};
+  List<LinkMenu> sidebarLinks = [];
+  List<Advertise> ads = [];
+  List<String> mainSlider = [];
+  Map<int, Province> provinces = <int, Province>{};
+  RxList<City> cities = <City>[].obs;
 
-  static TabController? tabController;
+  TabController? tabController;
 
-  static Map<int, Provider> tagProviders = <int, Provider>{};
+  Map<int, Provider> tagProviders = <int, Provider>{};
 
-  static AppVersion? newVersion;
+  AppVersion? newVersion;
 
-  static getInitData() async {
+  Future<void> getInitData() async {
     AppController.isLoading.value = true;
 
-    await getMainInfo();
-    await UserController.getUserInfo();
-    await ServiceController.getTagInfo();
+    getMainInfo();
+    Get.find<UserController>().getUserInfo();
+    // UserController.getUserInfo();
+    Get.find<ServiceController>().getTagInfo();
+    // await ServiceController.getTagInfo();
 
-    UserController.getMyLocation();
+    Get.find<UserController>().getMyLocation();
 
-    await ServiceController.getSearchedServices('');
-    firstPageRoute();
+    Get.find<ServiceController>().getSearchedServices('');
+    Timer(Duration(seconds: 3), () {
+      firstPageRoute();
+    });
 
     if (newVersion != null && !web.kIsWeb) {
       showAlertDialog(
@@ -100,7 +108,7 @@ class MainController extends GetxController {
     AppController.isLoading.value = false;
   }
 
-  static getMainInfo() async {
+  Future<void> getMainInfo() async {
     var response = await RestApi.get(mainInfoUrl);
 
     RestApi.responseHandler(
@@ -162,7 +170,7 @@ class MainController extends GetxController {
     );
   }
 
-  static firstPageRoute() async {
+  Future<void> firstPageRoute() async {
     if (RestApi.isConnected) {
       Navigator.of(Get.context!).pushReplacement(MainPageRoute());
       Map<String, dynamic> params = Uri.base.queryParametersAll;

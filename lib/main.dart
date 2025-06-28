@@ -14,6 +14,7 @@ import 'package:get/get.dart';
 import 'package:vodda_old/Public/styles.dart';
 import 'package:vodda_old/UI/Views/User/splash.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:vodda_old/default_bindings.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -98,22 +99,7 @@ class MyApp extends StatelessWidget {
             ],
           ),
       initialRoute: '/',
-      // onUnknownRoute: (settings){
-      //   List<String> pathComponents = settings.name!.split('/');
-      //   if(pathComponents[1]=='login')
-      //     return MaterialPageRoute(builder: (context)=>Login());
-      //   else if(pathComponents[1]=='category'){
-      //     var category=ServiceController.categories[int.parse(pathComponents[2])]!;
-      //     if(category!=null)
-      //     return MaterialPageRoute(builder: (context)=>SubList(category));
-      //   }
-      // },
-      // onGenerateRoute: (route){
-      //
-      //   print('routePrams>>>>${route.name} ${route.arguments}');
-      //   Navigator.push(context, MaterialPageRoute(builder: (builder)=>Categories()));
-      //   print('2');
-      // },
+      initialBinding: DefaultBinding(),
       routes: {
         '/': (context) => Splash(),
         '/networkError': (context) => ConnectionError(),

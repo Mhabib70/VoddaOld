@@ -395,15 +395,15 @@ class NotificationController extends GetxController
         break;
       case AppLifecycleState.inactive:
         print('appInactive');
-        if (!kIsWeb) backgroundService.startService();
+        if (!kIsWeb && Platform.isAndroid) backgroundService.startService();
         break;
       case AppLifecycleState.paused:
         print('appPause');
-        if (!kIsWeb) backgroundService.startService();
+        if (!kIsWeb && Platform.isAndroid) backgroundService.startService();
         break;
       case AppLifecycleState.detached:
         print('appDeatached');
-        if (!kIsWeb) backgroundService.startService();
+        if (!kIsWeb && Platform.isAndroid) backgroundService.startService();
         break;
       case AppLifecycleState.hidden:
         break;

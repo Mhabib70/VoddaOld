@@ -22,7 +22,7 @@ class ServiceController extends GetxController {
   static RxInt selectedCategory = 0.obs;
   static RxList<int> searchedServices = <int>[].obs;
 
-  static getTagInfo() async {
+  Future<void> getTagInfo() async {
     var response = await RestApi.get(tagInfoUrl);
     RestApi.responseHandler(
       response: response,
@@ -133,7 +133,7 @@ class ServiceController extends GetxController {
     }
   }
 
-  static getSearchedServices(String text) async {
+  Future<void> getSearchedServices(String text) async {
     AppController.isLoading.value = true;
     String tags = '';
     for (var tag in selectedTags.value) tags += '${tag.id!},';

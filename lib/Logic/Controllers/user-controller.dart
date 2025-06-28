@@ -67,7 +67,7 @@ class UserController extends GetxController {
   static RxMap<int, Address> addresses = <int, Address>{}.obs;
   static RxMap<int, UserCity> userCities = <int, UserCity>{}.obs;
 
-  static getUserInfo() async {
+  Future<void> getUserInfo() async {
     if (await Token.getToken() != null) {
       var response = await RestApi.get(userInfoUrl);
       RestApi.responseHandler(
@@ -623,7 +623,7 @@ class UserController extends GetxController {
     AppController.isLoading.value = false;
   }
 
-  static Future<bool> getMyLocation() async {
+  Future<bool> getMyLocation() async {
     print('start determine');
     bool serviceEnabled;
     LocationPermission permission;

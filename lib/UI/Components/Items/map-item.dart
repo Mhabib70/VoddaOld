@@ -31,7 +31,7 @@ class MapItem extends StatelessWidget {
         InkWell(
           onTap: () async {
             if (kIsWeb) {
-              await UserController.getMyLocation();
+              await Get.find<UserController>().getMyLocation();
               launchUrlString(
                 'https://www.google.com/maps/dir/${UserController.myPosition.latitude},${UserController.myPosition.latitude}/${lat},${long}',
               );

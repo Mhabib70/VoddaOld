@@ -47,7 +47,7 @@ class Search extends StatelessWidget {
                   width: maxItemWidth,
                   onChange: (text) {
                     ServiceController.serviceText = text;
-                    ServiceController.getSearchedServices(text);
+                    Get.find<ServiceController>().getSearchedServices(text);
                   },
                   icon2: InkWell(
                     onTap: () {

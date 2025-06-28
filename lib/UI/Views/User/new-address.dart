@@ -96,7 +96,7 @@ class NewAddress extends StatelessWidget {
             child: InkWell(
               onTap: () async {
                 if (kIsWeb) {
-                  await UserController.getMyLocation();
+                  await Get.find<UserController>().getMyLocation();
                   controller.move(UserController.myPosition, 16);
                 } else {
                   Map<Permission, PermissionStatus> statuses =
@@ -105,7 +105,7 @@ class NewAddress extends StatelessWidget {
                       .locationWhenInUse
                       .serviceStatus
                       .isEnabled) {
-                    await UserController.getMyLocation();
+                    await Get.find<UserController>().getMyLocation();
                     controller.move(UserController.myPosition, 16);
                   }
                 }
