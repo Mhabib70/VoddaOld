@@ -362,7 +362,7 @@ class NotificationController extends GetxController
   void onInit() async {
     super.onInit();
     WidgetsBinding.instance.addObserver(this);
-    if (kIsWeb) {
+    if (kIsWeb || !Platform.isAndroid) {
       print('onInitNotif');
       initSocket(isBackgroundSocket: false);
     } else {
@@ -390,7 +390,8 @@ class NotificationController extends GetxController
     switch (state) {
       case AppLifecycleState.resumed:
         print('appResume');
-        if (!kIsWeb) backgroundService.invoke('stopService');
+        if (!kIsWeb && Platform.isAndroid)
+          backgroundService.invoke('stopService');
         break;
       case AppLifecycleState.inactive:
         print('appInactive');

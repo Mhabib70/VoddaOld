@@ -232,6 +232,7 @@ class UserController extends GetxController {
         final croppedFile = await ImageCropper().cropImage(
           sourcePath: image.path,
           compressFormat: ImageCompressFormat.jpg,
+
           ///TODO: Emrani removed this
           // cropStyle: CropStyle.circle,
           compressQuality: 100,
@@ -247,6 +248,7 @@ class UserController extends GetxController {
             ),
             WebUiSettings(
               context: Get.context!,
+
               ///TODO: Emrani removed this
               // presentStyle: CropperPresentStyle.page,
               // boundary: CroppieBoundary(
@@ -647,11 +649,13 @@ class UserController extends GetxController {
       return false;
     }
     print('end determine');
-    Position myLocation = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high,
-    );
+    try {
+      Position myLocation = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
 
-    myPosition = LatLng(myLocation.latitude, myLocation.longitude);
+      myPosition = LatLng(myLocation.latitude, myLocation.longitude);
+    } catch (e) {}
 
     return true;
   }

@@ -44,34 +44,13 @@ class MainController extends GetxController {
   static getInitData() async {
     AppController.isLoading.value = true;
 
-    // bool flagVideo=false;
-    // bool flagApi=false;
-    // Future.delayed(Duration(seconds: web.kIsWeb?1:12),(){
-    // flagVideo=true;
-    //   if(flagApi)
-    //     firstPageRoute();
-    // });
     await getMainInfo();
     await UserController.getUserInfo();
     await ServiceController.getTagInfo();
-    // await getProvinces();
-    // await getAppSetting();
-    // await getMainSlider();
-    // getSidebarLinks();
-    // await UserController.getUser();
-    // await UserController.getUserCities();//must be before all service apis
-    // // await ServiceController.getCategories();//must be before favorites and tags
-    // UserController.getAddresses();
-    UserController.getMyLocation();
-    // UserController.getFavorites();
-    // await ServiceController.getSliderTags();
-    // ServiceController.getSearchTags();
-    await ServiceController.getSearchedServices(
-      '',
-    ); //must be at last because of loading
 
-    // flagApi=true;
-    // if(flagVideo)
+    UserController.getMyLocation();
+
+    await ServiceController.getSearchedServices('');
     firstPageRoute();
 
     if (newVersion != null && !web.kIsWeb) {

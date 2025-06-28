@@ -18,8 +18,8 @@ class ConnectionError extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Img(connectionerrorIcon, width: 180, height: 170, color: appColor),
-          SizedBox(height: 50),
+          Img(connectionerrorIcon, width: 110, height: 100, color: appColor),
+          SizedBox(height: 100),
           Text(
             'خطا در برقراری ارتباط !',
             style: AppController.fontStyle(fontTypes.heading1, appColor),

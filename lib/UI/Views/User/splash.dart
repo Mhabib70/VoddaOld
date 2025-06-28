@@ -22,13 +22,14 @@ class _SplashState extends State<Splash> {
   void initState() {
     super.initState();
     MainController.getInitData();
-    _controller = VideoPlayerController.asset('assets/media/splash.mp4')
-      ..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-        setState(() {
-          if (!kIsWeb) _controller.play();
-        });
-      });
+    // @smae1993 Commented
+    // _controller = VideoPlayerController.asset('assets/media/splash.mp4')
+    //   ..initialize().then((_) {
+    //     // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+    //     setState(() {
+    //       if (!kIsWeb) _controller.play();
+    //     });
+    //   });
   }
 
   @override
@@ -40,12 +41,12 @@ class _SplashState extends State<Splash> {
         alignment: Alignment.center,
         width: size.width,
         height: size.height,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(splashImage),
-            fit: BoxFit.fill,
-          ),
-        ),
+        // decoration: BoxDecoration(
+        //   image: DecorationImage(
+        //     image: AssetImage(splashImage),
+        //     fit: BoxFit.fill,
+        //   ),
+        // ),
         child: Stack(
           children: [
             Column(
@@ -58,15 +59,24 @@ class _SplashState extends State<Splash> {
                           ? Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              // Img(appLogo,width: 180,height: 180,),
-                              // SizedBox(
-                              //   height: 50,
-                              // ),
-                              // Text(
-                              //   '${appTitle}',
-                              //   style: AppController.fontStyle(
-                              //       fontTypes.heading1, itemColor1),
-                              // )
+                              Img(appLogo, width: 180, height: 180),
+                              SizedBox(height: 50),
+                              Text(
+                                '${appTitle}',
+                                style: AppController.fontStyle(
+                                  fontTypes.bold19,
+                                  itemColor1,
+                                ),
+                              ),
+                              SizedBox(height: 20),
+
+                              Text(
+                                'اولین اپلیکیشن تخصصی قرآن کریم',
+                                style: AppController.fontStyle(
+                                  fontTypes.bold14,
+                                  itemColor1,
+                                ),
+                              ),
                             ],
                           )
                           : Container(),
@@ -93,17 +103,17 @@ class _SplashState extends State<Splash> {
                     'درحال بارگذاری ...',
                     style: AppController.fontStyle(
                       fontTypes.heading4,
-                      Colors.white,
+                      Colors.black,
                     ),
                   ),
                 ),
               ],
             ),
-            Container(
-              width: size.width,
-              height: size.height,
-              child: VideoPlayer(_controller),
-            ),
+            // Container(
+            //   width: size.width,
+            //   height: size.height,
+            //   child: VideoPlayer(_controller),
+            // ),
           ],
         ),
       ),
