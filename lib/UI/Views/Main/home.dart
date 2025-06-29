@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:vodda_old/Logic/Controllers/app-controller.dart';
-import 'package:vodda_old/Logic/Controllers/main-controller.dart';
+import 'package:vodda_old/Logic/Controllers/main_controller.dart';
 import 'package:vodda_old/Logic/Controllers/service-controller.dart';
 import 'package:vodda_old/Public/styles.dart';
 import 'package:vodda_old/UI/Components/General/img.dart';
@@ -11,7 +11,6 @@ import 'package:vodda_old/UI/Components/General/my-scroll.dart';
 import 'package:vodda_old/UI/Components/Items/advertise-item.dart';
 import 'package:vodda_old/UI/Components/Items/main-category-item.dart';
 import 'package:vodda_old/UI/Components/Sliders/detail-slider.dart';
-import 'package:vodda_old/UI/Components/Sliders/main-slider.dart';
 import 'package:vodda_old/UI/Components/Sliders/slider-types-.dart';
 import 'package:vodda_old/UI/Views/Main/sub-list.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -28,7 +27,11 @@ class Home extends StatelessWidget {
           // size.width<maxItemWidth?
           // MainSlider()
           //     :
-          DetailSlider(MainController.mainSlider, padding: paddingSize),
+          GetBuilder<MainController>(
+            builder:
+                (controller) =>
+                    DetailSlider(controller.mainSlider, padding: paddingSize),
+          ),
 
           Container(
             margin: EdgeInsets.only(bottom: 30),
@@ -39,13 +42,16 @@ class Home extends StatelessWidget {
               ),
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    for (var advertise in MainController.ads)
-                      AdvertiseItem(advertise),
-                  ],
+                child: GetBuilder<MainController>(
+                  builder:
+                      (controller) => Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          for (var advertise in controller.ads)
+                            AdvertiseItem(advertise),
+                        ],
+                      ),
                 ),
               ),
             ),

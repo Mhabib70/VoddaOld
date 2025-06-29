@@ -165,6 +165,7 @@ class MainController extends GetxController {
                 ServiceController.categories[category.categoryId];
           }
         }
+        update();
       },
       printResponse: false,
     );
@@ -201,7 +202,7 @@ class MainController extends GetxController {
     }
   }
 
-  static getAppSetting() async {
+  Future<void> getAppSetting() async {
     var response = await RestApi.get(settingUrl);
     RestApi.responseHandler(
       response: response,
@@ -210,12 +211,13 @@ class MainController extends GetxController {
         // logo=response.data['data']['logo'];
         // primaryColor=Color(int.parse('0xff${response.data['data']['theme_color'].replaceAll('#', '')}'));
         setting = response!.data['data'];
+        update();
       },
       printResponse: true,
     );
   }
 
-  static getMainSlider() async {
+  Future<void> getMainSlider() async {
     var response = await RestApi.get(mainSliderUrl);
     RestApi.responseHandler(
       response: response,
@@ -224,11 +226,12 @@ class MainController extends GetxController {
         for (var json in response!.data['data']['images']) {
           mainSlider.add(web.kIsWeb ? json['file_pwa'] : json['file']);
         }
+        update();
       },
     );
   }
 
-  static getSidebarLinks() async {
+  Future<void> getSidebarLinks() async {
     var response = await RestApi.get(linksUrl);
     RestApi.responseHandler(
       response: response,
@@ -242,7 +245,7 @@ class MainController extends GetxController {
     );
   }
 
-  static getProvinces() async {
+  Future<void> getProvinces() async {
     var response = await RestApi.get(provincesUrl);
     RestApi.responseHandler(
       response: response,
@@ -252,7 +255,9 @@ class MainController extends GetxController {
           Province province = Province.fromJson(provinceJson);
           provinces[province.id!] = province;
         }
+        update();
       },
+
       printResponse: true,
     );
   }

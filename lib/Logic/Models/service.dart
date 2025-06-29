@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart' as web;
+import 'package:get/get.dart';
 import 'package:vodda_old/Logic/Controllers/app-controller.dart';
-import 'package:vodda_old/Logic/Controllers/main-controller.dart';
+import 'package:vodda_old/Logic/Controllers/main_controller.dart';
 import 'package:vodda_old/Logic/Controllers/service-controller.dart';
 import 'package:vodda_old/Logic/Controllers/user-controller.dart';
 import 'package:vodda_old/Logic/Models/category.dart';
@@ -84,7 +85,8 @@ class Service {
       for (var image in json['images'])
         images.add(web.kIsWeb ? image['file_pwa'] : image['file']);
     }
-    if (images.length == 0) images.add(MainController.setting['service_image']);
+    if (images.length == 0)
+      images.add(Get.find<MainController>().setting['service_image']);
     setBreadcrumb();
   }
 

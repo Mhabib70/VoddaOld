@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:vodda_old/Logic/Controllers/app-controller.dart';
-import 'package:vodda_old/Logic/Controllers/main-controller.dart';
+import 'package:vodda_old/Logic/Controllers/main_controller.dart';
 import 'package:vodda_old/Logic/Controllers/user-controller.dart';
 import 'package:vodda_old/Public/config.dart';
 import 'package:vodda_old/Public/images.dart';
@@ -98,19 +99,27 @@ class Login extends StatelessWidget {
                                   itemColor2,
                                 ),
                               ),
-                              InkWell(
-                                onTap: () {
-                                  launchUrlString(
-                                    MainController.setting['rule_link'],
+                              GetBuilder<MainController>(
+                                builder: (controller) {
+                                  return InkWell(
+                                    onTap: () {
+                                      if (controller.setting.containsKey(
+                                        "rule_link",
+                                      )) {
+                                        launchUrlString(
+                                          controller.setting['rule_link'],
+                                        );
+                                      }
+                                    },
+                                    child: Text(
+                                      'قوانین ',
+                                      style: AppController.fontStyle(
+                                        fontTypes.heading5,
+                                        appColor,
+                                      ),
+                                    ),
                                   );
                                 },
-                                child: Text(
-                                  'قوانین ',
-                                  style: AppController.fontStyle(
-                                    fontTypes.heading5,
-                                    appColor,
-                                  ),
-                                ),
                               ),
                               Text(
                                 'این اپلیکیشن است ..',

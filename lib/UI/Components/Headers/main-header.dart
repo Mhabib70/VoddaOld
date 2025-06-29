@@ -1,8 +1,7 @@
 import 'package:get/get.dart';
 import 'package:vodda_old/Logic/Controllers/app-controller.dart';
-import 'package:vodda_old/Logic/Controllers/main-controller.dart';
+import 'package:vodda_old/Logic/Controllers/main_controller.dart';
 import 'package:vodda_old/Logic/Controllers/user-controller.dart';
-import 'package:vodda_old/Public/api-urls.dart';
 import 'package:vodda_old/Public/config.dart';
 import 'package:vodda_old/Public/styles.dart';
 import 'package:vodda_old/UI/Views/User/city-list.dart';
@@ -11,6 +10,7 @@ import '../General/img.dart';
 import 'package:vodda_old/Public/images.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class MainHeader extends StatelessWidget {
   double padding;
   Function? openDrawer;
@@ -55,73 +55,76 @@ class MainHeader extends StatelessWidget {
                   SizedBox(width: 40),
                   size.width < maxItemWidth
                       ? Container()
-                      : Container(
+                      : SizedBox(
                         width: 800,
-                        child: TabBar(
-                          controller: MainController.tabController,
-                          indicatorColor: appColor,
-                          tabs: [
-                            Container(
-                              padding: EdgeInsets.all(10),
-                              child: Text(
-                                'خانه',
-                                style: AppController.fontStyle(
-                                  fontTypes.heading3,
-                                  MainController.tabController!.index == 0
-                                      ? appColor
-                                      : itemColor3,
-                                ),
+                        child: GetBuilder<MainController>(
+                          builder:
+                              (controller) => TabBar(
+                                controller: controller.tabController,
+                                indicatorColor: appColor,
+                                tabs: [
+                                  Container(
+                                    padding: EdgeInsets.all(10),
+                                    child: Text(
+                                      'خانه',
+                                      style: AppController.fontStyle(
+                                        fontTypes.heading3,
+                                        controller.tabController!.index == 0
+                                            ? appColor
+                                            : itemColor3,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.all(10),
+                                    child: Text(
+                                      'جستجو',
+                                      style: AppController.fontStyle(
+                                        fontTypes.heading3,
+                                        controller.tabController!.index == 2
+                                            ? appColor
+                                            : itemColor3,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.all(10),
+                                    child: Text(
+                                      'دسته ها',
+                                      style: AppController.fontStyle(
+                                        fontTypes.heading3,
+                                        controller.tabController!.index == 1
+                                            ? appColor
+                                            : itemColor3,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.all(10),
+                                    child: Text(
+                                      'درخواست ها',
+                                      style: AppController.fontStyle(
+                                        fontTypes.heading3,
+                                        controller.tabController!.index == 3
+                                            ? appColor
+                                            : itemColor3,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.all(10),
+                                    child: Text(
+                                      'پروفایل',
+                                      style: AppController.fontStyle(
+                                        fontTypes.heading3,
+                                        controller.tabController!.index == 4
+                                            ? appColor
+                                            : itemColor3,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.all(10),
-                              child: Text(
-                                'جستجو',
-                                style: AppController.fontStyle(
-                                  fontTypes.heading3,
-                                  MainController.tabController!.index == 2
-                                      ? appColor
-                                      : itemColor3,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.all(10),
-                              child: Text(
-                                'دسته ها',
-                                style: AppController.fontStyle(
-                                  fontTypes.heading3,
-                                  MainController.tabController!.index == 1
-                                      ? appColor
-                                      : itemColor3,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.all(10),
-                              child: Text(
-                                'درخواست ها',
-                                style: AppController.fontStyle(
-                                  fontTypes.heading3,
-                                  MainController.tabController!.index == 3
-                                      ? appColor
-                                      : itemColor3,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.all(10),
-                              child: Text(
-                                'پروفایل',
-                                style: AppController.fontStyle(
-                                  fontTypes.heading3,
-                                  MainController.tabController!.index == 4
-                                      ? appColor
-                                      : itemColor3,
-                                ),
-                              ),
-                            ),
-                          ],
                         ),
                       ),
                 ],

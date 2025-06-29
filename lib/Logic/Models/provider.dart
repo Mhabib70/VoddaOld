@@ -1,8 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:vodda_old/Logic/Controllers/app-controller.dart';
-import 'package:vodda_old/Logic/Controllers/main-controller.dart';
-import 'package:vodda_old/Logic/Controllers/order-controller.dart';
+import 'package:vodda_old/Logic/Controllers/main_controller.dart';
 import 'package:vodda_old/Logic/Controllers/service-controller.dart';
 import 'package:vodda_old/Logic/Models/comment.dart';
 import 'package:vodda_old/Logic/Models/cv-file.dart';
@@ -55,7 +53,12 @@ class Provider {
     skill = json['skill'];
     provinceId = json['province_id'];
     cityId = json['city_id'];
-    city = MainController.provinces[provinceId]!.cities[cityId]!.name;
+    city =
+        Get.find<MainController>()
+            .provinces[provinceId]
+            ?.cities[cityId]
+            ?.name ??
+        "";
     serviceCount = json['service_count'];
     online = json['online'];
 
@@ -65,7 +68,7 @@ class Provider {
     long = json['long'] == null ? null : double.parse(json['long']);
     avatar =
         json['avatar'] == null || json['avatar'] == ''
-            ? MainController.setting['provider_image']
+            ? Get.find<MainController>().setting['provider_image']
             : kIsWeb
             ? json['avatar_pwa']
             : json['avatar'];

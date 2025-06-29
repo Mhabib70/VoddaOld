@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vodda_old/Logic/Controllers/app-controller.dart';
-import 'package:vodda_old/Logic/Controllers/main-controller.dart';
+import 'package:vodda_old/Logic/Controllers/main_controller.dart';
 import 'package:vodda_old/Logic/Controllers/order-controller.dart';
 import 'package:vodda_old/Logic/Controllers/service-controller.dart';
 import 'package:vodda_old/Logic/Controllers/user-controller.dart';
@@ -14,10 +14,10 @@ import 'package:vodda_old/UI/Components/Items/discount-item.dart';
 import 'package:vodda_old/UI/Components/Items/overview-item.dart';
 import 'package:get/get.dart';
 import 'package:vodda_old/UI/Components/Items/question-item.dart';
-import 'package:vodda_old/UI/Views/User/edit-profile.dart';
 
+// ignore: must_be_immutable
 class QuestionOverviw extends StatelessWidget {
-  QuestionOverviw({Key? key}) : super(key: key);
+  QuestionOverviw({super.key});
   OrderController orderController = Get.put(OrderController());
   @override
   Widget build(BuildContext context) {
@@ -140,12 +140,16 @@ class QuestionOverviw extends StatelessWidget {
                               itemColor2,
                             ),
                           ),
-                          Text(
-                            '${MainController.provinces[UserController.addresses[orderController.addressId.value]!.provinceId]!.cities[UserController.addresses[orderController.addressId.value]!.cityId]!.name}',
-                            style: AppController.fontStyle(
-                              fontTypes.bold14,
-                              itemColor1,
-                            ),
+                          GetBuilder<MainController>(
+                            builder: (controller) {
+                              return Text(
+                                '${controller.provinces[UserController.addresses[orderController.addressId.value]!.provinceId]!.cities[UserController.addresses[orderController.addressId.value]!.cityId]!.name}',
+                                style: AppController.fontStyle(
+                                  fontTypes.bold14,
+                                  itemColor1,
+                                ),
+                              );
+                            },
                           ),
                         ],
                       ),

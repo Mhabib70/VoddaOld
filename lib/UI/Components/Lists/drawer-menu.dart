@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:vodda_old/Logic/Controllers/app-controller.dart';
-import 'package:vodda_old/Logic/Controllers/main-controller.dart';
+import 'package:vodda_old/Logic/Controllers/main_controller.dart';
 import 'package:vodda_old/Logic/Controllers/user-controller.dart';
 import 'package:vodda_old/Logic/Models/link-menu.dart';
 import 'package:vodda_old/Public/config.dart';
@@ -12,7 +12,6 @@ import 'package:vodda_old/UI/Components/Items/drawer-item.dart';
 import 'package:vodda_old/UI/Components/General/myDivider.dart';
 import 'package:vodda_old/UI/Views/Question/frequently-questions.dart';
 import 'package:vodda_old/UI/Views/User/text-page.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -85,46 +84,49 @@ class DrawerMenu extends StatelessWidget {
                 child: Column(
                   children: [
                     SizedBox(height: 20),
-                    // DrawerItem(editIcon,'ویرایش مشخصات'),
-                    // DrawerItem(paymentIcon,'پرداخت ها'),
-                    // DrawerItem(sucssessDrawerIcon,'ثبت نام به عنوان استاد'),
-                    // DrawerItem(heartIcon,'لیست علاقه مندی ها'),
-                    // DrawerItem(percentDrawerIcon,'تخفیف های فعال'),
-                    // DrawerItem(callDrawerIcon,'ارتباط باما / پشتیبانی'),
-                    // DrawerItem(instagramDrawerIcon,'صفحه اینستاگرام'),
-                    // DrawerItem('ثبت نام استاد',Img(wrenchIcon,width:20 ,height: 20,color: appColor,),),
-                    for (LinkMenu link in MainController.sidebarLinks)
-                      DrawerItem(
-                        link.title ?? '',
-                        Img(
-                          link.icon!,
-                          width: 20,
-                          height: 20,
-                          color: appColor,
-                          isNetwork: true,
-                        ),
-                        onClick: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (builder) => TextPage(link),
+
+                    GetBuilder<MainController>(
+                      builder:
+                          (controller) => Column(
+                            children: [
+                              for (LinkMenu link in controller.sidebarLinks)
+                                DrawerItem(
+                                  link.title ?? '',
+                                  Img(
+                                    link.icon!,
+                                    width: 20,
+                                    height: 20,
+                                    color: appColor,
+                                    isNetwork: true,
+                                  ),
+                                  onClick: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (builder) => TextPage(link),
+                                      ),
+                                    );
+                                  },
+                                ),
+                            ],
+                          ),
+                    ),
+                    GetBuilder<MainController>(
+                      builder:
+                          (controller) => DrawerItem(
+                            'تماس با پشتیبانی',
+                            Img(
+                              callDrawerIcon,
+                              width: 20,
+                              height: 20,
+                              color: appColor,
                             ),
-                          );
-                        },
-                      ),
-                    DrawerItem(
-                      'تماس با پشتیبانی',
-                      Img(
-                        callDrawerIcon,
-                        width: 20,
-                        height: 20,
-                        color: appColor,
-                      ),
-                      onClick: () {
-                        launchUrlString(
-                          "tel:${MainController.setting['help_number']}",
-                        );
-                      },
+                            onClick: () {
+                              launchUrlString(
+                                "tel:${controller.setting['help_number']}",
+                              );
+                            },
+                          ),
                     ),
                     DrawerItem(
                       'سوالات متداول',

@@ -1,8 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:vodda_old/Logic/Controllers/app-controller.dart';
-import 'package:vodda_old/Logic/Controllers/main-controller.dart';
-import 'package:vodda_old/Logic/Controllers/service-controller.dart';
-import 'package:vodda_old/Logic/Models/service.dart';
+import 'package:get/get.dart';
+import 'package:vodda_old/Logic/Controllers/main_controller.dart';
 
 class Category {
   int? id;
@@ -37,7 +35,7 @@ class Category {
     updatedAt = json['updated_at'];
     icon =
         json['icon'] == null || json['icon'] == ''
-            ? MainController.setting['category_image']
+            ? Get.find<MainController>().setting['category_image']
             : kIsWeb
             ? json['icon_pwa']
             : json['icon'];

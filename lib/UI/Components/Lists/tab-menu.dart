@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:vodda_old/Logic/Controllers/app-controller.dart';
-import 'package:vodda_old/Logic/Controllers/main-controller.dart';
-import 'package:vodda_old/Logic/Controllers/user-controller.dart';
+import 'package:vodda_old/Logic/Controllers/main_controller.dart';
 import 'package:vodda_old/Public/config.dart';
 import 'package:vodda_old/Public/images.dart';
 import 'package:vodda_old/Public/styles.dart';
 import 'package:vodda_old/UI/Components/General/img.dart';
 import 'package:get/get.dart';
-import 'package:vodda_old/UI/Views/User/login.dart';
 
 class TabMenu extends StatelessWidget {
-  TabMenu({Key? key}) : super(key: key);
+  const TabMenu({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,118 +16,142 @@ class TabMenu extends StatelessWidget {
       height: 70,
       width: size.width,
       decoration: BoxDecoration(color: whiteColor, boxShadow: shadow2),
-      child: TabBar(
-        indicator: CustomTabIndicator(color: appColor2),
-        labelColor: appColor2,
-        unselectedLabelColor: itemColor4,
-        controller: MainController.tabController,
-        onTap: (index) {},
-        tabs: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Img(
-                MainController.tabController!.index == 0
-                    ? homeFillIcon
-                    : homeBlankIcon,
-                color:
-                    MainController.tabController!.index == 0
-                        ? appColor2
-                        : itemColor4,
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 5),
-                child: Text(
-                  'خانه',
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+      child: GetBuilder<MainController>(
+        builder:
+            (controller) => TabBar(
+              indicator: CustomTabIndicator(color: appColor2),
+              labelColor: appColor2,
+              unselectedLabelColor: itemColor4,
+              controller: controller.tabController,
+              onTap: (index) {},
+              tabs: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Img(
+                      controller.tabController!.index == 0
+                          ? homeFillIcon
+                          : homeBlankIcon,
+                      color:
+                          controller.tabController!.index == 0
+                              ? appColor2
+                              : itemColor4,
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 5),
+                      child: Text(
+                        'خانه',
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Img(
-                MainController.tabController!.index == 1
-                    ? searchFillIcon
-                    : searchBlankIcon,
-                color:
-                    MainController.tabController!.index == 1
-                        ? appColor2
-                        : itemColor4,
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 5),
-                child: Text(
-                  'جستجو',
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Img(
+                      controller.tabController!.index == 1
+                          ? searchFillIcon
+                          : searchBlankIcon,
+                      color:
+                          controller.tabController!.index == 1
+                              ? appColor2
+                              : itemColor4,
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 5),
+                      child: Text(
+                        'جستجو',
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Img(
-                MainController.tabController!.index == 2
-                    ? categoryFillIcon
-                    : categoryBlankIcon,
-                color:
-                    MainController.tabController!.index == 2
-                        ? appColor2
-                        : itemColor4,
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 5),
-                child: Text(
-                  'دسته ها',
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Img(
+                      controller.tabController!.index == 2
+                          ? categoryFillIcon
+                          : categoryBlankIcon,
+                      color:
+                          controller.tabController!.index == 2
+                              ? appColor2
+                              : itemColor4,
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 5),
+                      child: Text(
+                        'دسته ها',
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
 
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Img(
-                ordersBlankIcon,
-                color:
-                    MainController.tabController!.index == 3
-                        ? appColor2
-                        : itemColor4,
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 5),
-                child: Text(
-                  'درخواستها',
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Img(
+                      ordersBlankIcon,
+                      color:
+                          controller.tabController!.index == 3
+                              ? appColor2
+                              : itemColor4,
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 5),
+                      child: Text(
+                        'درخواستها',
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 12,
+
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Img(
-                MainController.tabController!.index == 4
-                    ? userFillIcon
-                    : userBlankIcon,
-                color:
-                    MainController.tabController!.index == 4
-                        ? appColor2
-                        : itemColor4,
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 5),
-                child: Text(
-                  'پروفایل',
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Img(
+                      controller.tabController!.index == 4
+                          ? userFillIcon
+                          : userBlankIcon,
+                      color:
+                          controller.tabController!.index == 4
+                              ? appColor2
+                              : itemColor4,
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 5),
+                      child: Text(
+                        'پروفایل',
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
       ),
     );
   }
@@ -143,7 +164,7 @@ class CustomTabIndicator extends Decoration {
 
   final double indicatorHeight;
 
-  CustomTabIndicator({
+  const CustomTabIndicator({
     this.radius = 10,
     this.indicatorHeight = 5,
     this.color = Colors.blue,

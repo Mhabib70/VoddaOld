@@ -1,27 +1,27 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:vodda_old/Logic/Controllers/app-controller.dart';
-import 'package:vodda_old/Logic/Controllers/main-controller.dart';
+import 'package:vodda_old/Logic/Controllers/main_controller.dart';
 import 'package:vodda_old/Logic/Controllers/service-controller.dart';
 import 'package:vodda_old/Logic/Models/tag.dart';
 import 'package:vodda_old/Public/config.dart';
 import 'package:vodda_old/Public/images.dart';
 import 'package:vodda_old/Public/styles.dart';
-import 'package:vodda_old/UI/Components/Buttons/btn.dart';
 import 'package:vodda_old/UI/Components/General/img.dart';
 import 'package:vodda_old/UI/Components/Items/slider-item1.dart';
 import 'package:vodda_old/UI/Components/Items/slider-item2.dart';
 import 'package:vodda_old/UI/Components/Items/slider-item3.dart';
 import 'package:vodda_old/UI/Views/Main/sub-list.dart';
-import 'package:vodda_old/UI/Views/Order/service-index.dart';
 
+// ignore: must_be_immutable
 class SliderTypes extends StatelessWidget {
   Tag tagModel = Tag();
-  SliderTypes(this.tagModel, {Key? key}) : super(key: key);
+  SliderTypes(this.tagModel, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    // var size = MediaQuery.of(context).size;
 
     return Container(
       child: Column(
@@ -149,21 +149,26 @@ class SliderTypes extends StatelessWidget {
                 ),
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(width: paddingSize),
-                      for (var provider in MainController.tagProviders.values
-                          .where(
-                            (element) =>
-                                tagModel.providerIds.contains(element.id) &&
-                                element.hasUserCity() &&
-                                element.online == 1,
-                          ))
-                        SliderItem3(provider),
-                      SizedBox(width: paddingSize),
-                    ],
+                  child: GetBuilder<MainController>(
+                    builder:
+                        (controller) => Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(width: paddingSize),
+                            for (var provider in controller.tagProviders.values
+                                .where(
+                                  (element) =>
+                                      tagModel.providerIds.contains(
+                                        element.id,
+                                      ) &&
+                                      element.hasUserCity() &&
+                                      element.online == 1,
+                                ))
+                              SliderItem3(provider),
+                            SizedBox(width: paddingSize),
+                          ],
+                        ),
                   ),
                 ),
               )

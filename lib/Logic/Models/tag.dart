@@ -1,4 +1,5 @@
-import 'package:vodda_old/Logic/Controllers/main-controller.dart';
+import 'package:get/get.dart';
+import 'package:vodda_old/Logic/Controllers/main_controller.dart';
 import 'package:vodda_old/Logic/Controllers/service-controller.dart';
 import 'package:vodda_old/Logic/Models/provider.dart';
 import 'package:vodda_old/Logic/Models/service.dart';
@@ -34,7 +35,7 @@ class Tag {
         if (serviceJson['service'] != null) {
           Service serviceModel = Service.fromJson(serviceJson['service']);
           ServiceController.services[serviceModel.id!] = serviceModel;
-          this.serviceIds.add(serviceModel.id!);
+          serviceIds.add(serviceModel.id!);
         }
       }
       serviceIds.sort(
@@ -47,20 +48,24 @@ class Tag {
       for (var providerJson in json['providers']) {
         if (providerJson['provider'] != null) {
           Provider providerModel = Provider.fromJson(providerJson['provider']);
-          MainController.tagProviders[providerModel.id!] = providerModel;
-          this.providerIds.add(providerModel.id!);
+          try {
+            Get.find<MainController>().tagProviders[providerModel.id!] =
+                providerModel;
+          } catch (e) {}
+
+          providerIds.add(providerModel.id!);
         }
       }
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['title'] = this.title;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['type'] = this.type;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['id'] = id;
+    data['title'] = title;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    data['type'] = type;
     return data;
   }
 }

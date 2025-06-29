@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:vodda_old/Logic/Controllers/main-controller.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:vodda_old/Logic/Controllers/main_controller.dart';
 import 'package:vodda_old/Logic/Controllers/service-controller.dart';
-import 'package:vodda_old/Logic/Models/category.dart';
 import 'package:vodda_old/Public/images.dart';
 import 'package:vodda_old/Public/styles.dart';
 import 'package:vodda_old/UI/Components/General/my-scroll.dart';
@@ -12,6 +12,7 @@ import 'package:vodda_old/UI/Components/Items/service-item.dart';
 import 'package:vodda_old/UI/Components/Lists/empty-list.dart';
 import 'package:vodda_old/UI/Components/Popups/loading.dart';
 
+// ignore: must_be_immutable
 class SubList extends StatelessWidget {
   var model;
   bool isTag = false;
@@ -39,18 +40,22 @@ class SubList extends StatelessWidget {
                     getLoadedComponent:
                         () =>
                             isTag && model.providerIds.length > 0
-                                ? Column(
-                                  children: [
-                                    for (var providerId in model.providerIds)
-                                      if (MainController
-                                          .tagProviders[providerId]!
-                                          .hasUserCity())
-                                        ProviderItem(
-                                          MainController
-                                              .tagProviders[providerId]!,
-                                          hasSelectBtn: false,
-                                        ),
-                                  ],
+                                ? GetBuilder<MainController>(
+                                  builder:
+                                      (controller) => Column(
+                                        children: [
+                                          for (var providerId
+                                              in model.providerIds)
+                                            if (controller
+                                                .tagProviders[providerId]!
+                                                .hasUserCity())
+                                              ProviderItem(
+                                                controller
+                                                    .tagProviders[providerId]!,
+                                                hasSelectBtn: false,
+                                              ),
+                                        ],
+                                      ),
                                 )
                                 : model.serviceIds.length > 0
                                 ? Column(

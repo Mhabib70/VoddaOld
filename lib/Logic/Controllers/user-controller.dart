@@ -16,7 +16,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:vodda_old/Logic/Models/wallet.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:vodda_old/Logic/Controllers/app-controller.dart';
-import 'package:vodda_old/Logic/Controllers/main-controller.dart';
+import 'package:vodda_old/Logic/Controllers/main_controller.dart';
 import 'package:vodda_old/Logic/Controllers/notification-controller.dart';
 import 'package:vodda_old/Logic/Controllers/order-controller.dart';
 import 'package:vodda_old/Logic/Controllers/service-controller.dart';
@@ -196,13 +196,14 @@ class UserController extends GetxController {
       successCallback: () {
         user.value = User.fromJson(response!.data['data']);
         // getAddresses();
-        if (user.value.address.provinceId != null)
-          MainController.cities.value =
-              MainController
+        if (user.value.address.provinceId != null) {
+          Get.find<MainController>().cities.value =
+              Get.find<MainController>()
                   .provinces[user.value.address.provinceId]!
                   .cities
                   .values
                   .toList();
+        }
         if (user.value.isCompleted == true) Navigator.pop(Get.context!);
       },
     );
@@ -504,8 +505,11 @@ class UserController extends GetxController {
       response: response,
       successCallback: () {
         newAddress.provinceId = response!.data['data']['province'];
-        MainController.cities.value =
-            MainController.provinces[newAddress.provinceId]!.cities.values
+        Get.find<MainController>().cities.value =
+            Get.find<MainController>()
+                .provinces[newAddress.provinceId]!
+                .cities
+                .values
                 .toList();
         newAddress.cityId = response.data['data']['city'];
         newAddress.place = response.data['data']['address'];
@@ -548,15 +552,20 @@ class UserController extends GetxController {
                     text: 'انتخاب استان',
                     onSelect: (value) {
                       newAddress.cityId = null;
-                      MainController.cities.value = [];
+                      Get.find<MainController>().cities.value = [];
                       newAddress.provinceId = value;
-                      MainController.cities.value =
-                          MainController.provinces[value]!.cities.values
+                      Get.find<MainController>().cities.value =
+                          Get.find<MainController>()
+                              .provinces[value]!
+                              .cities
+                              .values
                               .toList();
                     },
                     options: {
-                      for (var provinceID in MainController.provinces.keys)
-                        MainController.provinces[provinceID]!.name: provinceID,
+                      for (var provinceID
+                          in Get.find<MainController>().provinces.keys)
+                        Get.find<MainController>().provinces[provinceID]!.name:
+                            provinceID,
                     },
                     icon: Img(locationIcon),
                     value: newAddress.provinceId,
@@ -569,10 +578,11 @@ class UserController extends GetxController {
                         newAddress.cityId = value;
                       },
                       options:
-                          MainController.cities.value.length > 0 &&
+                          Get.find<MainController>().cities.value.isNotEmpty &&
                                   newAddress.provinceId != null
                               ? {
-                                for (var city in MainController.cities.value)
+                                for (var city
+                                    in Get.find<MainController>().cities.value)
                                   city.name: city.id,
                               }
                               : <dynamic, dynamic>{},
@@ -585,15 +595,15 @@ class UserController extends GetxController {
                     lable: 'خیابان / کوچه / پلاک ...',
                     initValue: newAddress.place,
                     icon1: Container(
+                      width: 50,
+                      height: 250,
+                      alignment: Alignment.topCenter,
+                      padding: EdgeInsets.only(top: 5),
                       child: Icon(
                         Icons.my_location,
                         size: 20,
                         color: itemColor4,
                       ),
-                      width: 50,
-                      height: 250,
-                      alignment: Alignment.topCenter,
-                      padding: EdgeInsets.only(top: 5),
                     ),
                     lines: 10,
                     onChange: (text) {

@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:vodda_old/Logic/Controllers/app-controller.dart';
-import 'package:vodda_old/Logic/Controllers/main-controller.dart';
-import 'package:vodda_old/Logic/Controllers/order-controller.dart';
+import 'package:vodda_old/Logic/Controllers/main_controller.dart';
 import 'package:vodda_old/Logic/Controllers/user-controller.dart';
 import 'package:vodda_old/Logic/Models/link-menu.dart';
 import 'package:vodda_old/Public/config.dart';
@@ -14,12 +13,10 @@ import 'package:vodda_old/UI/Components/Buttons/btn.dart';
 import 'package:vodda_old/UI/Components/General/img.dart';
 import 'package:vodda_old/UI/Components/General/my-scroll.dart';
 import 'package:vodda_old/UI/Components/General/myDivider.dart';
-import 'package:vodda_old/UI/Components/Items/drawer-item.dart';
 import 'package:vodda_old/UI/Components/Items/icon-item.dart';
 import 'package:vodda_old/UI/Components/Items/menu-item.dart';
 import 'package:vodda_old/UI/Components/Popups/bottom-modal.dart';
 import 'package:vodda_old/UI/Components/Popups/loading.dart';
-import 'package:vodda_old/UI/Views/Order/my-orders.dart';
 import 'package:vodda_old/UI/Views/Question/frequently-questions.dart';
 import 'package:vodda_old/UI/Views/User/address-list.dart';
 import 'package:vodda_old/UI/Views/User/city-list.dart';
@@ -29,7 +26,6 @@ import 'package:vodda_old/UI/Views/User/login.dart';
 import 'package:vodda_old/UI/Views/User/payments.dart';
 import 'package:vodda_old/UI/Views/User/text-page.dart';
 import 'package:vodda_old/UI/Views/User/wallet-list.dart';
-import 'package:vodda_old/UI/Views/User/wallet.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -300,33 +296,44 @@ class Profile extends StatelessWidget {
                       },
                     ),
                     MyDivider(),
-                    for (LinkMenu link in MainController.sidebarLinks)
-                      Column(
-                        children: [
-                          ListMenuItem(
-                            link.icon!,
-                            link.title ?? '',
-                            isNetwork: true,
+                    GetBuilder<MainController>(
+                      builder: (controller) {
+                        return Column(
+                          children: [
+                            for (LinkMenu link in controller.sidebarLinks)
+                              Column(
+                                children: [
+                                  ListMenuItem(
+                                    link.icon!,
+                                    link.title ?? '',
+                                    isNetwork: true,
+                                    onClick: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (builder) => TextPage(link),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  MyDivider(),
+                                ],
+                              ),
+                          ],
+                        );
+                      },
+                    ),
+                    GetBuilder<MainController>(
+                      builder:
+                          (controller) => ListMenuItem(
+                            callDrawerIcon,
+                            'تماس با پشتیبانی',
                             onClick: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (builder) => TextPage(link),
-                                ),
+                              launchUrlString(
+                                "tel:${controller.setting['help_number']}",
                               );
                             },
                           ),
-                          MyDivider(),
-                        ],
-                      ),
-                    ListMenuItem(
-                      callDrawerIcon,
-                      'تماس با پشتیبانی',
-                      onClick: () {
-                        launchUrlString(
-                          "tel:${MainController.setting['help_number']}",
-                        );
-                      },
                     ),
                     MyDivider(),
                     // ListMenuItem(smsIcon, 'چت با پشتیبانی',onClick: (){
