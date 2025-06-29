@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:vodda_old/Logic/Controllers/app-controller.dart';
 import 'package:vodda_old/Logic/Controllers/main_controller.dart';
 import 'package:vodda_old/Logic/Controllers/service-controller.dart';
@@ -23,10 +24,6 @@ class Home extends StatelessWidget {
     return MyScroll(
       child: Column(
         children: [
-          // SizedBox(height: 30,),
-          // size.width<maxItemWidth?
-          // MainSlider()
-          //     :
           GetBuilder<MainController>(
             builder:
                 (controller) =>
@@ -40,19 +37,29 @@ class Home extends StatelessWidget {
                 scrollbars: false,
                 dragDevices: {PointerDeviceKind.touch, PointerDeviceKind.mouse},
               ),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: GetBuilder<MainController>(
-                  builder:
-                      (controller) => Row(
+              child: GetBuilder<MainController>(
+                builder:
+                    (controller) => SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          for (var advertise in controller.ads)
-                            AdvertiseItem(advertise),
-                        ],
+                        children:
+                            controller.ads.isEmpty
+                                ? [
+                                  // for (int i = 0; i < 3; i++)
+                                  //   Shimmer.fromColors(
+                                  //     baseColor: Colors.grey[300]!,
+                                  //     highlightColor: Colors.grey[100]!,
+                                  //     child: AdvertiseItem(null),
+                                  //   ),
+                                ]
+                                : [
+                                  // for (var advertise in controller.ads)
+                                  //   AdvertiseItem(advertise),
+                                ],
                       ),
-                ),
+                    ),
               ),
             ),
           ),

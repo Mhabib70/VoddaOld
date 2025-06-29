@@ -13,11 +13,11 @@ class MainCategoryItem extends StatefulWidget {
   bool isSelective, isMainPage;
   MainCategoryItem(
     this.categoryModel, {
-    Key? key,
+    super.key,
     this.onClick,
     this.isSelective = false,
     this.isMainPage = false,
-  }) : super(key: key);
+  });
 
   @override
   State<MainCategoryItem> createState() => _MainCategoryItemState();

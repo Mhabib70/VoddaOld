@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:vodda_old/Public/config.dart';
 import 'package:vodda_old/Public/styles.dart';
 import 'package:vodda_old/UI/Components/General/img.dart';
@@ -46,6 +47,21 @@ class _DetailSliderState extends State<DetailSlider> {
               },
             ),
             items: [
+              if (widget.images.isEmpty)
+                for (int i = 0; i < 3; i++)
+                  Shimmer.fromColors(
+                    baseColor: Colors.grey[300]!,
+                    highlightColor: Colors.grey[100]!,
+                    child: Container(
+                      width: maxItemWidth,
+                      height: size.width < maxItemWidth ? 300 : maxItemWidth,
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadiusGeometry.circular(25),
+                        ),
+                      ),
+                    ),
+                  ),
               for (int i = 0; i < widget.images.length; i++)
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: widget.padding),
@@ -54,6 +70,7 @@ class _DetailSliderState extends State<DetailSlider> {
                     width: maxItemWidth,
                     height: size.width < maxItemWidth ? 300 : maxItemWidth,
                     isNetwork: true,
+
                     radius: 25,
                   ),
                 ),

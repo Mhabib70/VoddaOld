@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:vodda_old/Logic/Controllers/app-controller.dart';
 import 'package:vodda_old/Public/api-urls.dart';
 import 'package:vodda_old/Public/config.dart';
@@ -56,11 +58,47 @@ class Img extends StatelessWidget {
                           fit: fit,
                         )
                     : isNetwork
-                    ? Image.network(
-                      (kIsWeb ? baseApiUrl : baseUrl) + path,
+                    ? CachedNetworkImage(
+                      imageUrl: (kIsWeb ? baseApiUrl : baseUrl) + path,
                       fit: fit,
+                      placeholder:
+                          (context, url) => Shimmer.fromColors(
+                            baseColor: Colors.grey[300]!,
+                            highlightColor: Colors.grey[100]!,
+                            child: SizedBox(),
+                          ),
+                      errorWidget:
+                          (context, url, error) => Shimmer.fromColors(
+                            baseColor: Colors.grey[300]!,
+                            highlightColor: Colors.grey[100]!,
+                            child: SizedBox(),
+                          ),
                     )
                     : Image.asset(path, fit: fit),
+
+            // Image.network(
+
+            //   fit: fit,
+            //   errorBuilder:
+            //       (context, error, stackTrace) => Shimmer.fromColors(
+            //         baseColor: Colors.grey[300]!,
+            //         highlightColor: Colors.grey[100]!,
+            //         child: SizedBox(),
+            //       ),
+            //   loadingBuilder: (context, child, loadingProgress) {
+            //     try {
+            //       if (loadingProgress!.cumulativeBytesLoaded ==
+            //           loadingProgress.expectedTotalBytes) {
+            //         return child;
+            //       }
+            //     } catch (e) {}
+            //     return Shimmer.fromColors(
+            //       baseColor: Colors.grey[300]!,
+            //       highlightColor: Colors.grey[100]!,
+            //       child: child,
+            //     );
+            //   },
+            // ),
           ),
         ),
       ),

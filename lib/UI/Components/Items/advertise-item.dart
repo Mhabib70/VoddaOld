@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vodda_old/Logic/Controllers/app-controller.dart';
-import 'package:vodda_old/Logic/Controllers/service-controller.dart';
 import 'package:vodda_old/Logic/Models/advertise.dart';
-import 'package:vodda_old/Logic/Models/category.dart';
 import 'package:vodda_old/Public/config.dart';
 import 'package:vodda_old/Public/styles.dart';
 import 'package:vodda_old/UI/Components/General/img.dart';
-import 'package:vodda_old/UI/Components/Popups/alert-dialog.dart';
 import 'package:vodda_old/UI/Views/Main/advertise-page.dart';
 
 class AdvertiseItem extends StatelessWidget {
-  Advertise advertise;
-  AdvertiseItem(this.advertise, {Key? key}) : super(key: key);
+  final Advertise? advertise;
+  const AdvertiseItem(this.advertise, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (advertise.image2 != null)
-          Get.to(() => AdvertisePage(advertise.image2!));
+        if (advertise != null && advertise?.image2 != null) {
+          Get.to(() => AdvertisePage(advertise!.image2!));
+        }
       },
       child: Container(
         width: 80,
@@ -38,9 +36,9 @@ class AdvertiseItem extends StatelessWidget {
                 border: Border.all(width: 3, color: appColor),
               ),
               child:
-                  advertise.image1 != null
+                  advertise != null && advertise!.image1 != null
                       ? Img(
-                        advertise.image1!,
+                        advertise!.image1!,
                         width: 60,
                         height: 60,
                         isNetwork: true,
@@ -51,7 +49,7 @@ class AdvertiseItem extends StatelessWidget {
             ),
             SizedBox(width: 10),
             Text(
-              '${advertise.title ?? ''}',
+              advertise?.title ?? '',
               style: AppController.fontStyle(fontTypes.regular14, itemColor1),
               textAlign: TextAlign.center,
               maxLines: 2,
