@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:vodda_old/Logic/Controllers/app-controller.dart';
-import 'package:vodda_old/Logic/Controllers/order-controller.dart';
-import 'package:vodda_old/Logic/Controllers/service-controller.dart';
-import 'package:vodda_old/Logic/Controllers/user-controller.dart';
+import 'package:vodda_old/Logic/Controllers/order_controller.dart';
+import 'package:vodda_old/Logic/Controllers/service_controller.dart';
 import 'package:vodda_old/Logic/Models/order.dart';
-import 'package:vodda_old/Public/config.dart';
 import 'package:vodda_old/Public/images.dart';
 import 'package:vodda_old/Public/styles.dart';
 import 'package:vodda_old/UI/Components/Buttons/btn.dart';
 import 'package:vodda_old/UI/Components/General/img.dart';
 import 'package:vodda_old/UI/Components/General/myDivider.dart';
-import 'package:vodda_old/UI/Views/Order/order-index.dart';
+import 'package:vodda_old/UI/Views/Order/order_index.dart';
 
 class OrderItem extends StatelessWidget {
   Order order = Order();
@@ -40,12 +39,15 @@ class OrderItem extends StatelessWidget {
                 Expanded(
                   child: Row(
                     children: [
-                      Img(
-                        ServiceController.services[order.serviceId]!.images[0],
-                        width: 80,
-                        height: 80,
-                        radius: 5,
-                        isNetwork: true,
+                      GetBuilder<ServiceController>(
+                        builder:
+                            (controller) => Img(
+                              controller.services[order.serviceId]!.images[0],
+                              width: 80,
+                              height: 80,
+                              radius: 5,
+                              isNetwork: true,
+                            ),
                       ),
                       SizedBox(width: 15),
                       Expanded(
@@ -53,14 +55,17 @@ class OrderItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
-                              '${ServiceController.services[order.serviceId]!.title}',
-                              style: AppController.fontStyle(
-                                fontTypes.heading3,
-                                itemColor1,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 3,
+                            GetBuilder<ServiceController>(
+                              builder:
+                                  (controller) => Text(
+                                    '${controller.services[order.serviceId]!.title}',
+                                    style: AppController.fontStyle(
+                                      fontTypes.heading3,
+                                      itemColor1,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 3,
+                                  ),
                             ),
                             SizedBox(height: 5),
                             Row(

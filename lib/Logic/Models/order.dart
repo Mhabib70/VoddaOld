@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:vodda_old/Logic/Controllers/service-controller.dart';
+import 'package:get/get.dart';
+import 'package:vodda_old/Logic/Controllers/service_controller.dart';
 import 'package:vodda_old/Logic/Models/addition.dart';
 import 'package:vodda_old/Logic/Models/answer.dart';
 import 'package:vodda_old/Logic/Models/gift.dart';
@@ -104,7 +105,7 @@ class Order {
     setColorIconState();
     if (json['service'] != null) {
       Service service = Service.fromJson(json['service']);
-      ServiceController.services[serviceId!] = service;
+      Get.find<ServiceController>().services[serviceId!] = service;
     }
     if (json['provider'] != null) {
       provider = Provider.fromJson(json['provider']);

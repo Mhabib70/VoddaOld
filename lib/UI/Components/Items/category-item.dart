@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:vodda_old/Logic/Controllers/app-controller.dart';
-import 'package:vodda_old/Logic/Controllers/service-controller.dart';
+import 'package:vodda_old/Logic/Controllers/service_controller.dart';
 import 'package:vodda_old/Logic/Models/category.dart';
-import 'package:vodda_old/Public/api-urls.dart';
 import 'package:vodda_old/Public/config.dart';
 import 'package:vodda_old/Public/images.dart';
 import 'package:vodda_old/Public/styles.dart';
@@ -36,7 +36,9 @@ class _CategoryItemState extends State<CategoryItem> {
                   showAccordion = !showAccordion;
                 });
               else {
-                ServiceController.getCategoryServices(widget.model.id!);
+                Get.find<ServiceController>().getCategoryServices(
+                  widget.model.id!,
+                );
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -105,8 +107,11 @@ class _CategoryItemState extends State<CategoryItem> {
                   for (var category in widget.model.categories)
                     InkWell(
                       onTap: () {
-                        if (!category.hasSub!)
-                          ServiceController.getCategoryServices(category.id!);
+                        if (!category.hasSub!) {
+                          Get.find<ServiceController>().getCategoryServices(
+                            category.id!,
+                          );
+                        }
 
                         Navigator.push(
                           context,

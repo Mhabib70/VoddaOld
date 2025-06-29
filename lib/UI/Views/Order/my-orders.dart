@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vodda_old/Logic/Controllers/app-controller.dart';
-import 'package:vodda_old/Logic/Controllers/order-controller.dart';
+import 'package:vodda_old/Logic/Controllers/order_controller.dart';
 import 'package:vodda_old/Logic/Controllers/user-controller.dart';
 import 'package:vodda_old/Public/config.dart';
 import 'package:vodda_old/Public/images.dart';
@@ -14,7 +14,7 @@ import 'package:vodda_old/UI/Components/Items/order-item.dart';
 import 'package:vodda_old/UI/Components/Lists/empty-list.dart';
 import 'package:vodda_old/UI/Components/Lists/order-list.dart';
 import 'package:vodda_old/UI/Components/Popups/loading.dart';
-import 'package:vodda_old/UI/Views/Order/order-index.dart';
+import 'package:vodda_old/UI/Views/Order/order_index.dart';
 
 class MyOrders extends StatelessWidget {
   const MyOrders({Key? key}) : super(key: key);

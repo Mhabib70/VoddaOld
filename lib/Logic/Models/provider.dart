@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:vodda_old/Logic/Controllers/main_controller.dart';
-import 'package:vodda_old/Logic/Controllers/service-controller.dart';
+import 'package:vodda_old/Logic/Controllers/service_controller.dart';
 import 'package:vodda_old/Logic/Models/comment.dart';
 import 'package:vodda_old/Logic/Models/cv-file.dart';
 import 'package:vodda_old/Logic/Models/service.dart';
@@ -81,13 +81,12 @@ class Provider {
     if (json['services'] != null) {
       for (var serviceJson in json['services']) {
         Service service = Service.fromJson(serviceJson);
-        ServiceController.services[service.id!] = service;
+        Get.find<ServiceController>().services[service.id!] = service;
         serviceIds.add(service.id!);
       }
       serviceIds.sort(
-        (a, b) => ServiceController.services[b]!.orderIndex!.compareTo(
-          ServiceController.services[a]!.orderIndex!,
-        ),
+        (a, b) => Get.find<ServiceController>().services[b]!.orderIndex!
+            .compareTo(Get.find<ServiceController>().services[a]!.orderIndex!),
       );
     }
     print('comments>>>>${json['comments']}');

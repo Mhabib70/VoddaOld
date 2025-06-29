@@ -18,8 +18,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:vodda_old/Logic/Controllers/app-controller.dart';
 import 'package:vodda_old/Logic/Controllers/main_controller.dart';
 import 'package:vodda_old/Logic/Controllers/notification-controller.dart';
-import 'package:vodda_old/Logic/Controllers/order-controller.dart';
-import 'package:vodda_old/Logic/Controllers/service-controller.dart';
+import 'package:vodda_old/Logic/Controllers/order_controller.dart';
+import 'package:vodda_old/Logic/Controllers/service_controller.dart';
 import 'package:vodda_old/Logic/Helpers/api-methods.dart';
 import 'package:vodda_old/Logic/Helpers/token-methods.dart';
 import 'package:vodda_old/Logic/Models/address.dart';
@@ -89,13 +89,14 @@ class UserController extends GetxController {
           myFavorites.value = <int>[];
           for (var json in response.data['data']['favorites']) {
             Service service = Service.fromJson(json['service']);
-            ServiceController.services[service.id!] = service;
+            Get.find<ServiceController>().services[service.id!] = service;
             myFavorites.add(service.id!);
           }
           myFavorites.sort(
-            (a, b) => ServiceController.services[b]!.orderIndex!.compareTo(
-              ServiceController.services[a]!.orderIndex!,
-            ),
+            (a, b) => Get.find<ServiceController>().services[b]!.orderIndex!
+                .compareTo(
+                  Get.find<ServiceController>().services[a]!.orderIndex!,
+                ),
           );
         },
         printResponse: false,
@@ -356,13 +357,14 @@ class UserController extends GetxController {
           myFavorites.value = <int>[];
           for (var json in response!.data['data']) {
             Service service = Service.fromJson(json['service']);
-            ServiceController.services[service.id!] = service;
+            Get.find<ServiceController>().services[service.id!] = service;
             myFavorites.add(service.id!);
           }
           myFavorites.sort(
-            (a, b) => ServiceController.services[b]!.orderIndex!.compareTo(
-              ServiceController.services[a]!.orderIndex!,
-            ),
+            (a, b) => Get.find<ServiceController>().services[b]!.orderIndex!
+                .compareTo(
+                  Get.find<ServiceController>().services[a]!.orderIndex!,
+                ),
           );
         },
       );
@@ -377,7 +379,7 @@ class UserController extends GetxController {
     RestApi.responseHandler(
       response: response,
       successCallback: () {
-        ServiceController.services[service.id]!.isFavorite = true;
+        Get.find<ServiceController>().services[service.id]!.isFavorite = true;
         myFavorites.add(service.id!);
       },
     );
@@ -391,7 +393,7 @@ class UserController extends GetxController {
     RestApi.responseHandler(
       response: response,
       successCallback: () {
-        ServiceController.services[service.id]!.isFavorite = false;
+        Get.find<ServiceController>().services[service.id]!.isFavorite = false;
         myFavorites.remove(service.id);
       },
     );

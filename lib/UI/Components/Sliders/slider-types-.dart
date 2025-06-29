@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:vodda_old/Logic/Controllers/app-controller.dart';
 import 'package:vodda_old/Logic/Controllers/main_controller.dart';
-import 'package:vodda_old/Logic/Controllers/service-controller.dart';
+import 'package:vodda_old/Logic/Controllers/service_controller.dart';
 import 'package:vodda_old/Logic/Models/tag.dart';
 import 'package:vodda_old/Public/config.dart';
 import 'package:vodda_old/Public/images.dart';
@@ -97,17 +97,24 @@ class SliderTypes extends StatelessWidget {
                       PointerDeviceKind.mouse,
                     },
                   ),
-                  child: Column(
-                    children: [
-                      for (var service in ServiceController.services.values
-                          .where(
-                            (element) =>
-                                tagModel.serviceIds.contains(element.id) &&
-                                element.hasUserCity(),
-                          )
-                          .take(9))
-                        SliderItem1(service),
-                    ],
+                  child: GetBuilder<ServiceController>(
+                    builder:
+                        (serviceController) => Column(
+                          children: [
+                            for (var service in serviceController
+                                .services
+                                .values
+                                .where(
+                                  (element) =>
+                                      tagModel.serviceIds.contains(
+                                        element.id,
+                                      ) &&
+                                      element.hasUserCity(),
+                                )
+                                .take(9))
+                              SliderItem1(service),
+                          ],
+                        ),
                   ),
                 ),
               )
@@ -121,21 +128,28 @@ class SliderTypes extends StatelessWidget {
                 ),
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(width: paddingSize),
-                      for (var service in ServiceController.services.values
-                          .where(
-                            (element) =>
-                                tagModel.serviceIds.contains(element.id) &&
-                                element.hasUserCity(),
-                          )
-                          .take(5))
-                        SliderItem2(service),
-                      SizedBox(width: paddingSize),
-                    ],
+                  child: GetBuilder<ServiceController>(
+                    builder:
+                        (serviceController) => Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(width: paddingSize),
+                            for (var service in serviceController
+                                .services
+                                .values
+                                .where(
+                                  (element) =>
+                                      tagModel.serviceIds.contains(
+                                        element.id,
+                                      ) &&
+                                      element.hasUserCity(),
+                                )
+                                .take(5))
+                              SliderItem2(service),
+                            SizedBox(width: paddingSize),
+                          ],
+                        ),
                   ),
                 ),
               )

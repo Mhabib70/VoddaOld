@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:vodda_old/Logic/Controllers/app-controller.dart';
 import 'package:vodda_old/Logic/Controllers/main_controller.dart';
-import 'package:vodda_old/Logic/Controllers/order-controller.dart';
-import 'package:vodda_old/Logic/Controllers/service-controller.dart';
+import 'package:vodda_old/Logic/Controllers/order_controller.dart';
+import 'package:vodda_old/Logic/Controllers/service_controller.dart';
 import 'package:vodda_old/Logic/Controllers/user-controller.dart';
 import 'package:vodda_old/Public/config.dart';
 import 'package:vodda_old/Public/images.dart';
@@ -30,16 +30,28 @@ class QuestionOverviw extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 20),
-              Text(
-                '${ServiceController.services[orderController.order.serviceId]!.title ?? ''}',
-                style: AppController.fontStyle(fontTypes.heading3, itemColor1),
+              GetBuilder<ServiceController>(
+                builder:
+                    (serviceController) => Text(
+                      serviceController
+                              .services[orderController.order.serviceId]!
+                              .title ??
+                          '',
+                      style: AppController.fontStyle(
+                        fontTypes.heading3,
+                        itemColor1,
+                      ),
+                    ),
               ),
               SizedBox(height: 30),
-              OverviewItem(
-                moneyIcon,
-                title: 'نوع پرداخت :',
-                value:
-                    '${ServiceController.services[orderController.order.serviceId]!.typePayTitle}',
+              GetBuilder<ServiceController>(
+                builder:
+                    (serviceController) => OverviewItem(
+                      moneyIcon,
+                      title: 'نوع پرداخت :',
+                      value:
+                          '${serviceController.services[orderController.order.serviceId]!.typePayTitle}',
+                    ),
               ),
 
               orderController.order.providerId != null
@@ -175,16 +187,24 @@ class QuestionOverviw extends StatelessWidget {
                     ],
                   )
                   : Container(),
-              ServiceController
-                              .services[orderController.order.serviceId]!
-                              .typePay ==
-                          0 ||
-                      ServiceController
-                              .services[orderController.order.serviceId]!
-                              .typePay ==
-                          1
-                  ? DiscountItem()
-                  : Container(),
+              GetBuilder<ServiceController>(
+                builder:
+                    (serviceController) =>
+                        serviceController
+                                        .services[orderController
+                                            .order
+                                            .serviceId]!
+                                        .typePay ==
+                                    0 ||
+                                serviceController
+                                        .services[orderController
+                                            .order
+                                            .serviceId]!
+                                        .typePay ==
+                                    1
+                            ? DiscountItem()
+                            : Container(),
+              ),
 
               Text(
                 'در صورتی که نکته خاصی در رابطه با این سفارش مدنظرتان است در کادر زیر وارد کنید :',
@@ -196,11 +216,11 @@ class QuestionOverviw extends StatelessWidget {
                 lable: 'توضیحات تکمیلی',
                 initValue: orderController.order.description,
                 icon1: Container(
-                  child: Icon(Icons.edit_outlined, size: 20, color: itemColor4),
                   width: 50,
                   height: 250,
                   alignment: Alignment.topCenter,
                   padding: EdgeInsets.only(top: 5),
+                  child: Icon(Icons.edit_outlined, size: 20, color: itemColor4),
                 ),
                 lines: 10,
                 onChange: (text) {

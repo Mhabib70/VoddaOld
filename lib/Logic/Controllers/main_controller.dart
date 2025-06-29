@@ -6,12 +6,10 @@ import 'package:flutter/foundation.dart' as web;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:vodda_old/Logic/Controllers/app-controller.dart';
-import 'package:vodda_old/Logic/Controllers/service-controller.dart';
+import 'package:vodda_old/Logic/Controllers/service_controller.dart';
 import 'package:vodda_old/Logic/Controllers/user-controller.dart';
 import 'package:vodda_old/Logic/Helpers/api-methods.dart';
-import 'package:vodda_old/Logic/Helpers/token-methods.dart';
 import 'package:vodda_old/Logic/Models/advertise.dart';
 import 'package:vodda_old/Logic/Models/category.dart';
 import 'package:vodda_old/Logic/Models/city.dart';
@@ -151,18 +149,19 @@ class MainController extends GetxController {
           ads.add(ad);
         }
 
-        ServiceController.categories = <int, Category>{};
+        Get.find<ServiceController>().categories = <int, Category>{};
         for (var json in response.data['data']['categories']) {
           Category category = Category.fromJson(json);
-          ServiceController.categories[category.id!] = category;
+          Get.find<ServiceController>().categories[category.id!] = category;
         }
-        for (var category in ServiceController.categories.values) {
+        for (var category in Get.find<ServiceController>().categories.values) {
           if (category.categoryId != null) {
-            ServiceController.categories[category.categoryId]!.categories.add(
-              category,
-            );
-            ServiceController.categories[category.id!]!.parent =
-                ServiceController.categories[category.categoryId];
+            Get.find<ServiceController>()
+                .categories[category.categoryId]!
+                .categories
+                .add(category);
+            Get.find<ServiceController>().categories[category.id!]!.parent =
+                Get.find<ServiceController>().categories[category.categoryId];
           }
         }
         update();
@@ -182,18 +181,24 @@ class MainController extends GetxController {
       }
       if (params.containsKey('category')) {
         Category? category =
-            ServiceController.categories[int.parse(params['category'][0])];
+            Get.find<ServiceController>().categories[int.parse(
+              params['category'][0],
+            )];
         if (category != null) {
-          ServiceController.getCategoryServices(category.id!);
+          Get.find<ServiceController>().getCategoryServices(category.id!);
           Navigator.of(
             Get.context!,
           ).push(MaterialPageRoute(builder: (builder) => SubList(category)));
         }
       }
       if (params.containsKey('service')) {
-        await ServiceController.findService(int.parse(params['service'][0]));
+        await Get.find<ServiceController>().findService(
+          int.parse(params['service'][0]),
+        );
         Service? service =
-            ServiceController.services[int.parse(params['service'][0])];
+            Get.find<ServiceController>().services[int.parse(
+              params['service'][0],
+            )];
         if (service != null)
           Navigator.of(Get.context!).push(
             MaterialPageRoute(builder: (builder) => ServiceIndex(service)),

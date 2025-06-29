@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:vodda_old/Logic/Controllers/main_controller.dart';
-import 'package:vodda_old/Logic/Controllers/service-controller.dart';
+import 'package:vodda_old/Logic/Controllers/service_controller.dart';
 import 'package:vodda_old/Logic/Models/provider.dart';
 import 'package:vodda_old/Logic/Models/service.dart';
 
@@ -34,14 +34,14 @@ class Tag {
       for (var serviceJson in json['services']) {
         if (serviceJson['service'] != null) {
           Service serviceModel = Service.fromJson(serviceJson['service']);
-          ServiceController.services[serviceModel.id!] = serviceModel;
+          Get.find<ServiceController>().services[serviceModel.id!] =
+              serviceModel;
           serviceIds.add(serviceModel.id!);
         }
       }
       serviceIds.sort(
-        (a, b) => ServiceController.services[b]!.orderIndex!.compareTo(
-          ServiceController.services[a]!.orderIndex!,
-        ),
+        (a, b) => Get.find<ServiceController>().services[b]!.orderIndex!
+            .compareTo(Get.find<ServiceController>().services[a]!.orderIndex!),
       );
     }
     if (json['providers'] != null) {

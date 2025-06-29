@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vodda_old/Logic/Controllers/app-controller.dart';
-import 'package:vodda_old/Logic/Controllers/order-controller.dart';
-import 'package:vodda_old/Logic/Controllers/service-controller.dart';
-import 'package:vodda_old/Logic/Models/comment.dart';
+import 'package:vodda_old/Logic/Controllers/order_controller.dart';
+import 'package:vodda_old/Logic/Controllers/service_controller.dart';
 import 'package:vodda_old/Logic/Models/provider.dart';
 import 'package:vodda_old/Public/config.dart';
 import 'package:vodda_old/Public/images.dart';
@@ -11,26 +10,19 @@ import 'package:vodda_old/Public/styles.dart';
 import 'package:vodda_old/UI/Components/Buttons/btn.dart';
 import 'package:vodda_old/UI/Components/General/column-scroll.dart';
 import 'package:vodda_old/UI/Components/General/img.dart';
-import 'package:vodda_old/UI/Components/General/my-scroll.dart';
-import 'package:vodda_old/UI/Components/General/myDivider.dart';
 import 'package:vodda_old/UI/Components/Headers/back-header.dart';
-import 'package:vodda_old/UI/Components/Inputs/input.dart';
 import 'package:vodda_old/UI/Components/Items/comment-item.dart';
 import 'package:vodda_old/UI/Components/Items/icon-item.dart';
-import 'package:vodda_old/UI/Components/Items/resume-item.dart';
 import 'package:vodda_old/UI/Components/Items/service-item.dart';
-import 'package:vodda_old/UI/Components/Lists/empty-list.dart';
 import 'package:vodda_old/UI/Components/Popups/bottom-modal.dart';
 import 'package:vodda_old/UI/Components/Popups/loading.dart';
-import 'package:vodda_old/UI/Views/Order/comments-list.dart';
 import 'package:vodda_old/UI/Views/Question/question-index.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProviderIndex extends StatelessWidget {
   Provider provider;
   bool hasSelectBtn;
-  ProviderIndex(this.provider, {Key? key, this.hasSelectBtn = true})
-    : super(key: key);
+  ProviderIndex(this.provider, {super.key, this.hasSelectBtn = true});
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +38,9 @@ class ProviderIndex extends StatelessWidget {
             children: [
               BackHeader(title: 'مشخصات استاد'),
               Expanded(
-                child: Container(
+                child: SizedBox(
                   width: size.width,
-                  child: Container(
+                  child: SizedBox(
                     // padding: EdgeInsets.only(left: paddingSize,right: paddingSize),
                     width: maxItemWidth,
                     child: Column(
@@ -62,7 +54,7 @@ class ProviderIndex extends StatelessWidget {
                           isNetwork: true,
                         ),
                         SizedBox(height: 10),
-                        Container(
+                        SizedBox(
                           height: 50,
                           child: Text(
                             '${provider.fname} ${provider.lname}',
@@ -75,7 +67,7 @@ class ProviderIndex extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 10),
-                        Container(
+                        SizedBox(
                           height: 40,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -83,7 +75,7 @@ class ProviderIndex extends StatelessWidget {
                               Img(locationIcon, width: 30, height: 30),
                               SizedBox(width: 10),
                               Text(
-                                '${provider.city ?? ""}',
+                                provider.city ?? "",
                                 style: AppController.fontStyle(
                                   fontTypes.heading5,
                                   itemColor4,
@@ -108,7 +100,7 @@ class ProviderIndex extends StatelessWidget {
                               ),
                               SizedBox(width: 5),
                               Text(
-                                '${provider.typeTitle ?? ""}',
+                                provider.typeTitle ?? "",
                                 style: AppController.fontStyle(
                                   fontTypes.heading5,
                                   itemColor4,
@@ -121,7 +113,7 @@ class ProviderIndex extends StatelessWidget {
                         ),
                         SizedBox(height: 20),
                         Center(
-                          child: Container(
+                          child: SizedBox(
                             width: maxItemWidth,
                             height: 90,
                             child: Row(
@@ -226,16 +218,19 @@ class ProviderIndex extends StatelessWidget {
                                 Expanded(
                                   child: TabBarView(
                                     children: [
-                                      ColumnScroll(
-                                        children: [
-                                          SizedBox(height: 20),
-                                          for (int serviceId
-                                              in provider.serviceIds)
-                                            ServiceItem(
-                                              ServiceController
-                                                  .services[serviceId]!,
+                                      GetBuilder<ServiceController>(
+                                        builder:
+                                            (serviceController) => ColumnScroll(
+                                              children: [
+                                                SizedBox(height: 20),
+                                                for (int serviceId
+                                                    in provider.serviceIds)
+                                                  ServiceItem(
+                                                    serviceController
+                                                        .services[serviceId]!,
+                                                  ),
+                                              ],
                                             ),
-                                        ],
                                       ),
                                       SingleChildScrollView(
                                         child: Column(

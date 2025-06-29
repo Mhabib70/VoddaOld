@@ -1,26 +1,24 @@
 import 'package:get/get.dart';
 import 'package:vodda_old/Logic/Controllers/app-controller.dart';
-import 'package:vodda_old/Logic/Controllers/user-controller.dart';
 import 'package:vodda_old/Logic/Helpers/api-methods.dart';
 import 'package:vodda_old/Logic/Models/category.dart';
-import 'package:vodda_old/Logic/Models/provider.dart';
 import 'package:vodda_old/Logic/Models/service.dart';
 import 'package:vodda_old/Logic/Models/tag.dart';
 import 'package:vodda_old/Public/api-urls.dart';
 
 class ServiceController extends GetxController {
-  static List<Tag> serviceTags = [];
-  static List<Tag> providerTags = [];
+  List<Tag> serviceTags = [];
+  List<Tag> providerTags = [];
 
-  static Map<int, Category> categories = <int, Category>{};
-  static String categoryText = '';
-  static RxList<Category> searchedCategories = <Category>[].obs;
+  Map<int, Category> categories = <int, Category>{};
+  String categoryText = '';
+  RxList<Category> searchedCategories = <Category>[].obs;
 
-  static Map<int, Service> services = <int, Service>{};
-  static String serviceText = '';
-  static RxList<Tag> selectedTags = <Tag>[].obs;
-  static RxInt selectedCategory = 0.obs;
-  static RxList<int> searchedServices = <int>[].obs;
+  Map<int, Service> services = <int, Service>{};
+  String serviceText = '';
+  RxList<Tag> selectedTags = <Tag>[].obs;
+  RxInt selectedCategory = 0.obs;
+  RxList<int> searchedServices = <int>[].obs;
 
   Future<void> getTagInfo() async {
     var response = await RestApi.get(tagInfoUrl);
@@ -39,12 +37,13 @@ class ServiceController extends GetxController {
           serviceTags.add(tag);
         }
         serviceTags.sort((a, b) => b.orderIndex!.compareTo(a.orderIndex!));
+        update();
       },
       printResponse: true,
     );
   }
 
-  static getSliderTags() async {
+  Future<void> getSliderTags() async {
     var response = await RestApi.get(sliderTagsUrl);
     RestApi.responseHandler(
       response: response,
@@ -54,12 +53,13 @@ class ServiceController extends GetxController {
           Tag tag = Tag.fromJson(json);
           serviceTags.add(tag);
         }
+        update();
       },
       printResponse: true,
     );
   }
 
-  static getSearchTags() async {
+  Future<void> getSearchTags() async {
     var response = await RestApi.get(searchTagsUrl);
     RestApi.responseHandler(
       response: response,
@@ -69,12 +69,13 @@ class ServiceController extends GetxController {
           Tag tag = Tag.fromJson(json);
           providerTags.add(tag);
         }
+        update();
       },
       printResponse: true,
     );
   }
 
-  static getCategories() async {
+  Future<void> getCategories() async {
     var response = await RestApi.get(categoryListUrl);
     RestApi.responseHandler(
       response: response,
@@ -90,25 +91,29 @@ class ServiceController extends GetxController {
             categories[category.id!]!.parent = categories[category.categoryId];
           }
         }
+        update();
       },
       printResponse: true,
     );
   }
 
-  static findCategory(String text) {
+  void findCategory(String text) {
     searchedCategories.value = [];
     if (text != '')
+      // ignore: curly_braces_in_flow_control_structures
       for (var category in categories.values) {
         if (category.title!.removeAllWhitespace.contains(
           text.removeAllWhitespace,
-        ))
+        )) {
           searchedCategories.value.add(category);
+        }
       }
+    update();
   }
 
-  static getCategoryServices(int categoryId) async {
+  Future<void> getCategoryServices(int categoryId) async {
     if (!categories[categoryId]!.hasSub! &&
-        categories[categoryId]!.serviceIds.length == 0) {
+        categories[categoryId]!.serviceIds.isEmpty) {
       AppController.isLoading.value = true;
       var response = await RestApi.post(
         serviceListUrl,
@@ -126,6 +131,8 @@ class ServiceController extends GetxController {
             (a, b) =>
                 services[b]!.orderIndex!.compareTo(services[a]!.orderIndex!),
           );
+
+          update();
         },
         printResponse: true,
       );
@@ -136,7 +143,9 @@ class ServiceController extends GetxController {
   Future<void> getSearchedServices(String text) async {
     AppController.isLoading.value = true;
     String tags = '';
-    for (var tag in selectedTags.value) tags += '${tag.id!},';
+    for (var tag in selectedTags.value) {
+      tags += '${tag.id!},';
+    }
 
     var response = await RestApi.post(
       serviceListUrl,
@@ -159,13 +168,15 @@ class ServiceController extends GetxController {
           (a, b) =>
               services[b]!.orderIndex!.compareTo(services[a]!.orderIndex!),
         );
+
+        update();
       },
       printResponse: true,
     );
     AppController.isLoading.value = false;
   }
 
-  static findService(int serviceID) async {
+  Future<void> findService(int serviceID) async {
     var response = await RestApi.post(findServiceUrl, body: {'id': serviceID});
     RestApi.responseHandler(
       response: response,
@@ -173,12 +184,13 @@ class ServiceController extends GetxController {
         Service service = Service.fromJson(response!.data['data']);
         services[serviceID] = service;
         getRelatedServices(serviceID);
+        update();
       },
     );
   }
 
-  static getRelatedServices(int serviceID) async {
-    if (ServiceController.services[serviceID]!.relatedIds.length == 0) {
+  Future<void> getRelatedServices(int serviceID) async {
+    if (services[serviceID]!.relatedIds.isEmpty) {
       AppController.isLoading.value = true;
       var response = await RestApi.post(
         relatedServicesUrl,
@@ -190,12 +202,13 @@ class ServiceController extends GetxController {
           for (var json in response!.data['data']) {
             Service service = Service.fromJson(json);
             services[service.id!] = service;
-            ServiceController.services[serviceID]!.relatedIds.add(service.id!);
+            services[serviceID]!.relatedIds.add(service.id!);
           }
-          ServiceController.services[serviceID]!.relatedIds.sort(
+          services[serviceID]!.relatedIds.sort(
             (a, b) =>
                 services[b]!.orderIndex!.compareTo(services[a]!.orderIndex!),
           );
+          update();
         },
       );
       AppController.isLoading.value = false;

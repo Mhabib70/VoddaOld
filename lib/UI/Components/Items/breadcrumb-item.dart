@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:vodda_old/Logic/Controllers/app-controller.dart';
-import 'package:vodda_old/Logic/Controllers/service-controller.dart';
+import 'package:vodda_old/Logic/Controllers/service_controller.dart';
 import 'package:vodda_old/Logic/Models/category.dart';
 import 'package:vodda_old/Public/styles.dart';
 import 'package:vodda_old/UI/Components/General/img.dart';
@@ -14,7 +15,7 @@ class BreadcrumbItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        ServiceController.getCategoryServices(categoryModel.id!);
+        Get.find<ServiceController>().getCategoryServices(categoryModel.id!);
         Navigator.push(
           context,
           MaterialPageRoute(builder: (builder) => SubList(categoryModel)),

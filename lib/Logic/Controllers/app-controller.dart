@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart' as web;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:vodda_old/Logic/Controllers/service-controller.dart';
+import 'package:vodda_old/Logic/Controllers/service_controller.dart';
 import 'package:vodda_old/Logic/Controllers/user-controller.dart';
 import 'package:vodda_old/Logic/Helpers/api-methods.dart';
 import 'package:vodda_old/Logic/Helpers/token-methods.dart';

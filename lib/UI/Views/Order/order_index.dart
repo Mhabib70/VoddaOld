@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:vodda_old/Logic/Controllers/app-controller.dart';
-import 'package:vodda_old/Logic/Controllers/order-controller.dart';
-import 'package:vodda_old/Logic/Controllers/service-controller.dart';
-import 'package:vodda_old/Logic/Controllers/user-controller.dart';
+import 'package:vodda_old/Logic/Controllers/order_controller.dart';
+import 'package:vodda_old/Logic/Controllers/service_controller.dart';
 import 'package:vodda_old/Logic/Models/addition.dart';
 import 'package:vodda_old/Logic/Models/order.dart';
 import 'package:vodda_old/Logic/Models/rate.dart';
@@ -32,8 +30,8 @@ import 'package:vodda_old/UI/Views/Order/providers-list.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class OrderIndex extends StatelessWidget {
-  int orderId;
-  OrderIndex(this.orderId, {Key? key}) : super(key: key);
+  final int orderId;
+  const OrderIndex(this.orderId, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -67,60 +65,64 @@ class OrderIndex extends StatelessWidget {
                                 width: size.width,
                                 child: Column(
                                   children: [
-                                    Container(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Expanded(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  '${ServiceController.services[order.serviceId]!.title}',
-                                                  style:
-                                                      AppController.fontStyle(
-                                                        fontTypes.heading3,
-                                                        itemColor1,
-                                                      ),
-                                                ),
-                                                SizedBox(height: 10),
-                                                Row(
-                                                  children: [
-                                                    Img(
-                                                      order.stateIcon!,
-                                                      width: 18,
-                                                      height: 18,
-                                                      color: order.stateColor,
-                                                    ),
-                                                    SizedBox(width: 10),
-                                                    Text(
-                                                      'وضعیت : ${order.stateTitle}',
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              GetBuilder<ServiceController>(
+                                                builder:
+                                                    (serviceController) => Text(
+                                                      '${serviceController.services[order.serviceId]!.title}',
                                                       style:
                                                           AppController.fontStyle(
-                                                            fontTypes.heading5,
-                                                            order.stateColor!,
+                                                            fontTypes.heading3,
+                                                            itemColor1,
                                                           ),
                                                     ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
+                                              ),
+                                              SizedBox(height: 10),
+                                              Row(
+                                                children: [
+                                                  Img(
+                                                    order.stateIcon!,
+                                                    width: 18,
+                                                    height: 18,
+                                                    color: order.stateColor,
+                                                  ),
+                                                  SizedBox(width: 10),
+                                                  Text(
+                                                    'وضعیت : ${order.stateTitle}',
+                                                    style:
+                                                        AppController.fontStyle(
+                                                          fontTypes.heading5,
+                                                          order.stateColor!,
+                                                        ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
                                           ),
-                                          Img(
-                                            ServiceController
-                                                .services[order.serviceId]!
-                                                .images[0],
-                                            width: 80,
-                                            height: 80,
-                                            radius: 5,
-                                            isNetwork: true,
-                                          ),
-                                        ],
-                                      ),
+                                        ),
+                                        GetBuilder<ServiceController>(
+                                          builder:
+                                              (serviceController) => Img(
+                                                serviceController
+                                                    .services[order.serviceId]!
+                                                    .images[0],
+                                                width: 80,
+                                                height: 80,
+                                                radius: 5,
+                                                isNetwork: true,
+                                              ),
+                                        ),
+                                      ],
                                     ),
                                     SizedBox(height: 20),
                                     order.state == 0 || order.state == 3
@@ -172,14 +174,18 @@ class OrderIndex extends StatelessWidget {
                                                         ? 'پرداخت'
                                                         : 'درخواست جدید',
                                                 onClick: () {
+                                                  var serviceController =
+                                                      Get.find<
+                                                        ServiceController
+                                                      >();
                                                   if (order.statusPay == 0 &&
                                                       order.price != 0 &&
-                                                      (ServiceController
+                                                      (serviceController
                                                                   .services[order
                                                                       .serviceId]!
                                                                   .typePay ==
                                                               0 ||
-                                                          ServiceController
+                                                          serviceController
                                                                   .services[order
                                                                       .serviceId]!
                                                                   .typePay ==
@@ -807,148 +813,164 @@ class OrderIndex extends StatelessWidget {
                             right: paddingSize,
                             bottom: paddingSize,
                           ),
-                          child: Row(
-                            children: [
-                              ServiceController
-                                              .services[order.serviceId]!
-                                              .typePlace !=
-                                          2 ||
-                                      OrderController
-                                              .timerDuration
-                                              .value
-                                              .inSeconds ==
-                                          0
-                                  ? Expanded(
-                                    child: Btn(
-                                      btnType.primary,
-                                      text:
-                                          order.state == 2
-                                              ? 'تایید انجام کار'
-                                              : order.isRate == false
-                                              ? 'امتیاز دهی'
-                                              : 'دانلود فاکتور',
-                                      onClick: () {
-                                        if (order.state == 2) {
-                                          OrderController.confirmOrder(
-                                            order.id!,
-                                          );
-                                        } else if (order.isRate == false) {
-                                          Rate rate = Rate(orderId: order.id);
-
-                                          showBottomModal(
-                                            context,
-                                            400,
-                                            Column(
-                                              children: [
-                                                SizedBox(height: 10),
-                                                Text(
-                                                  'ثبت امتیاز :',
-                                                  style:
-                                                      AppController.fontStyle(
-                                                        fontTypes.heading3,
-                                                        itemColor2,
-                                                      ),
-                                                ),
-                                                SizedBox(height: 20),
-                                                StarRating(
-                                                  size: 40,
-                                                  onRatingChanged: (value) {
-                                                    rate.value = value.toInt();
-                                                  },
-                                                ),
-                                                SizedBox(height: 30),
-                                                Input(
-                                                  lable:
-                                                      'نظرتان را اینجا بنویسید ...',
-                                                  initValue: rate.description,
-                                                  icon1: Container(
-                                                    child: Icon(
-                                                      Icons.edit_outlined,
-                                                      size: 20,
-                                                      color: itemColor4,
-                                                    ),
-                                                    width: 50,
-                                                    height: 125,
-                                                    alignment:
-                                                        Alignment.topCenter,
-                                                    padding: EdgeInsets.only(
-                                                      top: 5,
-                                                    ),
-                                                  ),
-                                                  lines: 5,
-                                                  onChange: (text) {
-                                                    rate.description = text;
-                                                  },
-                                                ),
-                                                SizedBox(height: 20),
-                                                Btn(
-                                                  btnType.primary,
-                                                  text: 'ثبت امتیاز',
-                                                  onClick: () {
-                                                    Navigator.pop(context);
-                                                    OrderController.setRate(
-                                                      rate,
-                                                    );
-                                                  },
-                                                ),
-                                              ],
-                                            ),
-                                          );
-                                        } else {
-                                          OrderController.getExportOrder(
-                                            orderId,
-                                          );
-                                        }
-                                      },
-                                    ),
-                                  )
-                                  : Container(),
-                              order.state == 2 &&
-                                      ServiceController
-                                              .services[order.serviceId]!
-                                              .typePlace ==
-                                          2
-                                  ? Expanded(
-                                    child: Row(
-                                      children: [
-                                        SizedBox(width: 15),
-                                        Expanded(
+                          child: GetBuilder<ServiceController>(
+                            builder:
+                                (serviceController) => Row(
+                                  children: [
+                                    serviceController
+                                                    .services[order.serviceId]!
+                                                    .typePlace !=
+                                                2 ||
+                                            OrderController
+                                                    .timerDuration
+                                                    .value
+                                                    .inSeconds ==
+                                                0
+                                        ? Expanded(
                                           child: Btn(
                                             btnType.primary,
                                             text:
-                                                OrderController
-                                                            .timerDuration
-                                                            .value
-                                                            .inSeconds !=
-                                                        0
-                                                    ? OrderController.getTime()
-                                                    : 'تماس',
+                                                order.state == 2
+                                                    ? 'تایید انجام کار'
+                                                    : order.isRate == false
+                                                    ? 'امتیاز دهی'
+                                                    : 'دانلود فاکتور',
                                             onClick: () {
-                                              if (OrderController
-                                                      .timerDuration
-                                                      .value
-                                                      .inSeconds ==
-                                                  0)
-                                                if (ServiceController
-                                                        .services[order
-                                                            .serviceId!]!
-                                                        .type_online ==
-                                                    0)
-                                                  OrderController.meetProvider(
-                                                    orderId,
-                                                  );
-                                                else
-                                                  OrderController.callProvider(
-                                                    orderId,
-                                                  );
+                                              if (order.state == 2) {
+                                                OrderController.confirmOrder(
+                                                  order.id!,
+                                                );
+                                              } else if (order.isRate ==
+                                                  false) {
+                                                Rate rate = Rate(
+                                                  orderId: order.id,
+                                                );
+
+                                                showBottomModal(
+                                                  context,
+                                                  400,
+                                                  Column(
+                                                    children: [
+                                                      SizedBox(height: 10),
+                                                      Text(
+                                                        'ثبت امتیاز :',
+                                                        style:
+                                                            AppController.fontStyle(
+                                                              fontTypes
+                                                                  .heading3,
+                                                              itemColor2,
+                                                            ),
+                                                      ),
+                                                      SizedBox(height: 20),
+                                                      StarRating(
+                                                        size: 40,
+                                                        onRatingChanged: (
+                                                          value,
+                                                        ) {
+                                                          rate.value =
+                                                              value.toInt();
+                                                        },
+                                                      ),
+                                                      SizedBox(height: 30),
+                                                      Input(
+                                                        lable:
+                                                            'نظرتان را اینجا بنویسید ...',
+                                                        initValue:
+                                                            rate.description,
+                                                        icon1: Container(
+                                                          child: Icon(
+                                                            Icons.edit_outlined,
+                                                            size: 20,
+                                                            color: itemColor4,
+                                                          ),
+                                                          width: 50,
+                                                          height: 125,
+                                                          alignment:
+                                                              Alignment
+                                                                  .topCenter,
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                top: 5,
+                                                              ),
+                                                        ),
+                                                        lines: 5,
+                                                        onChange: (text) {
+                                                          rate.description =
+                                                              text;
+                                                        },
+                                                      ),
+                                                      SizedBox(height: 20),
+                                                      Btn(
+                                                        btnType.primary,
+                                                        text: 'ثبت امتیاز',
+                                                        onClick: () {
+                                                          Navigator.pop(
+                                                            context,
+                                                          );
+                                                          OrderController.setRate(
+                                                            rate,
+                                                          );
+                                                        },
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              } else {
+                                                OrderController.getExportOrder(
+                                                  orderId,
+                                                );
+                                              }
                                             },
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                  : Container(),
-                            ],
+                                        )
+                                        : Container(),
+                                    order.state == 2 &&
+                                            serviceController
+                                                    .services[order.serviceId]!
+                                                    .typePlace ==
+                                                2
+                                        ? Expanded(
+                                          child: Row(
+                                            children: [
+                                              SizedBox(width: 15),
+                                              Expanded(
+                                                child: Btn(
+                                                  btnType.primary,
+                                                  text:
+                                                      OrderController
+                                                                  .timerDuration
+                                                                  .value
+                                                                  .inSeconds !=
+                                                              0
+                                                          ? OrderController.getTime()
+                                                          : 'تماس',
+                                                  onClick: () {
+                                                    if (OrderController
+                                                            .timerDuration
+                                                            .value
+                                                            .inSeconds ==
+                                                        0)
+                                                      if (serviceController
+                                                              .services[order
+                                                                  .serviceId!]!
+                                                              .type_online ==
+                                                          0)
+                                                        OrderController.meetProvider(
+                                                          orderId,
+                                                        );
+                                                      else
+                                                        OrderController.callProvider(
+                                                          orderId,
+                                                        );
+                                                  },
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                        : Container(),
+                                  ],
+                                ),
                           ),
                         )
                         : Container(),

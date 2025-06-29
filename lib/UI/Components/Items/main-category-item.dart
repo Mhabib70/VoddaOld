@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vodda_old/Logic/Controllers/app-controller.dart';
-import 'package:vodda_old/Logic/Controllers/service-controller.dart';
+import 'package:vodda_old/Logic/Controllers/service_controller.dart';
 import 'package:vodda_old/Logic/Models/category.dart';
 import 'package:vodda_old/Public/config.dart';
 import 'package:vodda_old/Public/styles.dart';
@@ -31,52 +31,57 @@ class _MainCategoryItemState extends State<MainCategoryItem> {
         onTap: () {
           if (widget.onClick != null) widget.onClick!();
         },
-        child: Container(
-          width: 100,
-          margin: EdgeInsets.only(left: 20, right: 20),
-
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                width: 3,
-                color:
-                    ServiceController.selectedCategory.value ==
-                                widget.categoryModel.id &&
-                            widget.isSelective
-                        ? appColor
-                        : Colors.transparent,
-              ),
-            ),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Container(
+        child: GetBuilder<ServiceController>(
+          builder:
+              (serviceController) => Container(
                 width: 100,
-                height: 90,
-                child:
-                    widget.categoryModel.icon != null
-                        ? Img(
-                          widget.categoryModel.icon!,
-                          width: 100,
-                          height: 90,
-                          isNetwork: true,
-                        )
-                        : Container(),
-              ),
-              SizedBox(width: 10),
-              Text(
-                '${widget.categoryModel.title ?? ''}',
-                style: AppController.fontStyle(
-                  widget.isMainPage ? fontTypes.regular15 : fontTypes.regular15,
-                  itemColor1,
+                margin: EdgeInsets.only(left: 20, right: 20),
+
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      width: 3,
+                      color:
+                          serviceController.selectedCategory.value ==
+                                      widget.categoryModel.id &&
+                                  widget.isSelective
+                              ? appColor
+                              : Colors.transparent,
+                    ),
+                  ),
                 ),
-                textAlign: TextAlign.center,
-                maxLines: 2,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: 100,
+                      height: 90,
+                      child:
+                          widget.categoryModel.icon != null
+                              ? Img(
+                                widget.categoryModel.icon!,
+                                width: 100,
+                                height: 90,
+                                isNetwork: true,
+                              )
+                              : Container(),
+                    ),
+                    SizedBox(width: 10),
+                    Text(
+                      widget.categoryModel.title ?? '',
+                      style: AppController.fontStyle(
+                        widget.isMainPage
+                            ? fontTypes.regular15
+                            : fontTypes.regular15,
+                        itemColor1,
+                      ),
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                    ),
+                  ],
+                ),
               ),
-            ],
-          ),
         ),
       );
     });

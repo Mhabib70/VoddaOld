@@ -1,12 +1,10 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:vodda_old/Logic/Controllers/app-controller.dart';
-import 'package:vodda_old/Logic/Controllers/service-controller.dart';
+import 'package:vodda_old/Logic/Controllers/service_controller.dart';
 import 'package:vodda_old/Logic/Controllers/user-controller.dart';
 import 'package:vodda_old/Logic/Helpers/api-methods.dart';
 import 'package:vodda_old/Logic/Models/addition.dart';
@@ -21,14 +19,11 @@ import 'package:vodda_old/Logic/Models/question.dart';
 import 'package:vodda_old/Logic/Models/rate.dart';
 import 'package:vodda_old/Public/api-urls.dart';
 import 'package:vodda_old/Public/config.dart';
-import 'package:vodda_old/Public/images.dart';
 import 'package:vodda_old/Public/styles.dart';
 import 'package:vodda_old/UI/Components/Buttons/btn.dart';
-import 'package:vodda_old/UI/Components/General/img.dart';
 import 'package:vodda_old/UI/Components/Inputs/input.dart';
 import 'package:vodda_old/UI/Components/Popups/bottom-modal.dart';
 import 'package:vodda_old/UI/Components/Popups/snackbar.dart';
-import 'package:vodda_old/UI/Components/Selectors/radio-group.dart';
 import 'package:vodda_old/UI/Components/Selectors/select-pay.dart';
 import 'package:vodda_old/UI/Components/Selectors/star-rating.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -124,9 +119,15 @@ class OrderController extends GetxController {
           }
         }
 
-        if (questions.length == 0) {
-          if (ServiceController.services[order.serviceId]!.typePlace != 1) {
-            if (ServiceController.services[order.serviceId]!.typeTime == 0) {
+        if (questions.isEmpty) {
+          if (Get.find<ServiceController>()
+                  .services[order.serviceId]!
+                  .typePlace !=
+              1) {
+            if (Get.find<ServiceController>()
+                    .services[order.serviceId]!
+                    .typeTime ==
+                0) {
               step = 4;
             } else {
               await getDates();
@@ -244,8 +245,12 @@ class OrderController extends GetxController {
     computeCost();
     int updatedStep = isNext ? step + 1 : step - 1;
     if (updatedStep == 5) {
-      if ((ServiceController.services[order.serviceId]!.typePay == 0 ||
-              ServiceController.services[order.serviceId]!.typePay == 1) &&
+      if ((Get.find<ServiceController>().services[order.serviceId]!.typePay ==
+                  0 ||
+              Get.find<ServiceController>()
+                      .services[order.serviceId]!
+                      .typePay ==
+                  1) &&
           order.priceValue != 0) {
         showBottomModal(
           Get.context!,
@@ -300,15 +305,20 @@ class OrderController extends GetxController {
           ),
         );
       } else {
-        order.typePay = ServiceController.services[order.serviceId]!.typePay;
+        order.typePay =
+            Get.find<ServiceController>().services[order.serviceId]!.typePay;
         createOrder();
       }
       return;
     }
 
-    while ((ServiceController.services[order.serviceId]!.typePlace != 1 &&
+    while ((Get.find<ServiceController>()
+                    .services[order.serviceId]!
+                    .typePlace !=
+                1 &&
             updatedStep == 2) ||
-        (ServiceController.services[order.serviceId]!.typeTime == 0 &&
+        (Get.find<ServiceController>().services[order.serviceId]!.typeTime ==
+                0 &&
             updatedStep == 3)) {
       isNext ? updatedStep++ : updatedStep--;
     }
@@ -344,7 +354,7 @@ class OrderController extends GetxController {
     AppController.isLoading.value = true;
     var response;
     if (order.providerId != null &&
-        ServiceController.services[order.serviceId]!.typeTime == 3)
+        Get.find<ServiceController>().services[order.serviceId]!.typeTime == 3)
       response = await RestApi.post(
         reserveProviderUrl,
         body: {
@@ -363,7 +373,8 @@ class OrderController extends GetxController {
       successCallback: () {
         dates = <String, Date>{};
         if (order.providerId != null &&
-            ServiceController.services[order.serviceId]!.typeTime == 3) {
+            Get.find<ServiceController>().services[order.serviceId]!.typeTime ==
+                3) {
           for (var json in response.data['data']) {
             Date date = Date.fromJson(json);
             dates[date.value!] = date;
@@ -408,11 +419,15 @@ class OrderController extends GetxController {
         order.id = o.id;
         order.code = o.code;
         statusPay.value = o.statusPay!;
-        if ((ServiceController.services[order.serviceId]!.typePay == 0 ||
-                ServiceController.services[order.serviceId]!.typePay == 1) &&
-            (order.priceValue + addPrice) > 0)
+        if ((Get.find<ServiceController>().services[order.serviceId]!.typePay ==
+                    0 ||
+                Get.find<ServiceController>()
+                        .services[order.serviceId]!
+                        .typePay ==
+                    1) &&
+            (order.priceValue + addPrice) > 0) {
           await paymentOrder(order, 0);
-        else {
+        } else {
           statusPay.value = 1;
           step = 5;
           print('asdasdasd>>>${step}');
@@ -442,11 +457,12 @@ class OrderController extends GetxController {
         statusPay.value = order.statusPay!;
         myOrders[order.id!] = order;
         //update:
-        if (response.data['data']['pay_link'] != null)
+        if (response.data['data']['pay_link'] != null) {
           await launchUrlString(
             baseUrl + response.data['data']['pay_link'],
             mode: LaunchMode.externalApplication,
           );
+        }
         await Future.delayed(Duration(seconds: 1), () {
           OrderController o = Get.put(OrderController());
           o.step = 5;
@@ -918,7 +934,8 @@ class OrderController extends GetxController {
     timer.cancel();
     timerDuration.value = Duration(seconds: 0);
     if (order.state == 2 &&
-        ServiceController.services[order.serviceId]!.typePlace == 2) {
+        Get.find<ServiceController>().services[order.serviceId]!.typePlace ==
+            2) {
       String time =
           order.time!.length > 2
               ? '${order.time}'

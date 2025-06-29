@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:vodda_old/Logic/Controllers/app-controller.dart';
-import 'package:vodda_old/Logic/Controllers/service-controller.dart';
+import 'package:vodda_old/Logic/Controllers/service_controller.dart';
 import 'package:vodda_old/Logic/Models/tag.dart';
 import 'package:vodda_old/Public/config.dart';
-import 'package:vodda_old/Public/styles.dart';
 
 class TagItem extends StatelessWidget {
   Tag tagModel = Tag();
@@ -29,7 +29,7 @@ class TagItem extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              ServiceController.selectedTags.remove(tagModel);
+              Get.find<ServiceController>().selectedTags.remove(tagModel);
             },
             child: Icon(Icons.clear, size: 15, color: appColor),
           ),

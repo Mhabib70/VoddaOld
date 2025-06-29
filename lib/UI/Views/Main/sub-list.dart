@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:vodda_old/Logic/Controllers/main_controller.dart';
-import 'package:vodda_old/Logic/Controllers/service-controller.dart';
+import 'package:vodda_old/Logic/Controllers/service_controller.dart';
 import 'package:vodda_old/Public/images.dart';
 import 'package:vodda_old/Public/styles.dart';
 import 'package:vodda_old/UI/Components/General/my-scroll.dart';
@@ -58,16 +58,21 @@ class SubList extends StatelessWidget {
                                       ),
                                 )
                                 : model.serviceIds.length > 0
-                                ? Column(
-                                  children: [
-                                    for (var serviceId in model.serviceIds)
-                                      if (ServiceController.services[serviceId]!
-                                          .hasUserCity())
-                                        ServiceItem(
-                                          ServiceController
-                                              .services[serviceId]!,
-                                        ),
-                                  ],
+                                ? GetBuilder<ServiceController>(
+                                  builder:
+                                      (serviceController) => Column(
+                                        children: [
+                                          for (var serviceId
+                                              in model.serviceIds)
+                                            if (serviceController
+                                                .services[serviceId]!
+                                                .hasUserCity())
+                                              ServiceItem(
+                                                serviceController
+                                                    .services[serviceId]!,
+                                              ),
+                                        ],
+                                      ),
                                 )
                                 : model.categories.length > 0
                                 ? Column(

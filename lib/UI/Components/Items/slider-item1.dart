@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:vodda_old/Logic/Controllers/app-controller.dart';
-import 'package:vodda_old/Logic/Controllers/service-controller.dart';
+import 'package:vodda_old/Logic/Controllers/service_controller.dart';
 import 'package:vodda_old/Logic/Models/service.dart';
 import 'package:vodda_old/Public/styles.dart';
 import 'package:vodda_old/UI/Components/General/img.dart';
@@ -16,7 +17,7 @@ class SliderItem1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        ServiceController.getRelatedServices(service.id!);
+        Get.find<ServiceController>().getRelatedServices(service.id!);
         Navigator.push(
           context,
           MaterialPageRoute(builder: (builder) => ServiceIndex(service)),

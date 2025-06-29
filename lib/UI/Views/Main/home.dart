@@ -2,14 +2,12 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:vodda_old/Logic/Controllers/app-controller.dart';
 import 'package:vodda_old/Logic/Controllers/main_controller.dart';
-import 'package:vodda_old/Logic/Controllers/service-controller.dart';
+import 'package:vodda_old/Logic/Controllers/service_controller.dart';
 import 'package:vodda_old/Public/styles.dart';
 import 'package:vodda_old/UI/Components/General/img.dart';
 import 'package:vodda_old/UI/Components/General/my-scroll.dart';
-import 'package:vodda_old/UI/Components/Items/advertise-item.dart';
 import 'package:vodda_old/UI/Components/Items/main-category-item.dart';
 import 'package:vodda_old/UI/Components/Sliders/detail-slider.dart';
 import 'package:vodda_old/UI/Components/Sliders/slider-types-.dart';
@@ -63,29 +61,41 @@ class Home extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 30),
-            child: Wrap(
-              children: [
-                for (var category in ServiceController.categories.values)
-                  if (category.categoryId == null)
-                    MainCategoryItem(
-                      category,
-                      isMainPage: true,
-                      onClick: () {
-                        ServiceController.getCategoryServices(category.id!);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (builder) => SubList(category),
-                          ),
-                        );
-                      },
+          GetBuilder<ServiceController>(
+            builder:
+                (serviceController) => Column(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(bottom: 30),
+                      child: Wrap(
+                        children: [
+                          for (var category
+                              in serviceController.categories.values)
+                            if (category.categoryId == null)
+                              MainCategoryItem(
+                                category,
+                                isMainPage: true,
+                                onClick: () {
+                                  serviceController.getCategoryServices(
+                                    category.id!,
+                                  );
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (builder) => SubList(category),
+                                    ),
+                                  );
+                                },
+                              ),
+                        ],
+                      ),
                     ),
-              ],
-            ),
+                    for (var tag in serviceController.serviceTags)
+                      SliderTypes(tag),
+                  ],
+                ),
           ),
-          for (var tag in ServiceController.serviceTags) SliderTypes(tag),
+
           // for(var tag in ServiceController.providerTags)
           //     SliderTypes(tag),
           Text(

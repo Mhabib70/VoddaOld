@@ -1,8 +1,7 @@
 import 'package:flutter/foundation.dart' as web;
 import 'package:get/get.dart';
-import 'package:vodda_old/Logic/Controllers/app-controller.dart';
 import 'package:vodda_old/Logic/Controllers/main_controller.dart';
-import 'package:vodda_old/Logic/Controllers/service-controller.dart';
+import 'package:vodda_old/Logic/Controllers/service_controller.dart';
 import 'package:vodda_old/Logic/Controllers/user-controller.dart';
 import 'package:vodda_old/Logic/Models/category.dart';
 
@@ -109,12 +108,17 @@ class Service {
 
   setBreadcrumb() {
     if (this.categoryId != null &&
-        ServiceController.categories.keys.contains(this.categoryId)) {
-      Category parent = ServiceController.categories[this.categoryId!]!;
+        Get.find<ServiceController>().categories.keys.contains(
+          this.categoryId,
+        )) {
+      Category parent =
+          Get.find<ServiceController>().categories[this.categoryId!]!;
       breadcrumb.add(parent);
       while (parent.categoryId != null &&
-          ServiceController.categories.keys.contains(parent.categoryId)) {
-        parent = ServiceController.categories[parent.categoryId!]!;
+          Get.find<ServiceController>().categories.keys.contains(
+            parent.categoryId,
+          )) {
+        parent = Get.find<ServiceController>().categories[parent.categoryId!]!;
         breadcrumb.add(parent);
       }
       ;
