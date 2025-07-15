@@ -1,4 +1,4 @@
-package com.example.vodda_old
+package ir.vodda.app
 
 import io.flutter.embedding.android.FlutterActivity
 
