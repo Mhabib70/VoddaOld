@@ -8,7 +8,7 @@ import 'package:vodda_old/Public/styles.dart';
 import 'package:vodda_old/UI/Components/General/img.dart';
 
 class MainCategoryItem extends StatefulWidget {
-  Category categoryModel;
+  Category? categoryModel;
   Function? onClick;
   bool isSelective, isMainPage;
   MainCategoryItem(
@@ -33,7 +33,7 @@ class _MainCategoryItemState extends State<MainCategoryItem> {
       child: GetBuilder<ServiceController>(
         builder:
             (serviceController) => Container(
-              width: 100,
+              width: 80,
               margin: EdgeInsets.only(left: 20, right: 20),
 
               decoration: BoxDecoration(
@@ -42,7 +42,7 @@ class _MainCategoryItemState extends State<MainCategoryItem> {
                     width: 3,
                     color:
                         serviceController.selectedCategory.value ==
-                                    widget.categoryModel.id &&
+                                    widget.categoryModel?.id &&
                                 widget.isSelective
                             ? appColor
                             : Colors.transparent,
@@ -54,21 +54,21 @@ class _MainCategoryItemState extends State<MainCategoryItem> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SizedBox(
-                    width: 100,
-                    height: 90,
+                    width: 80,
+                    height: 70,
                     child:
-                        widget.categoryModel.icon != null
+                        widget.categoryModel?.icon != null
                             ? Img(
-                              widget.categoryModel.icon!,
-                              width: 100,
-                              height: 90,
+                              widget.categoryModel!.icon!,
+                              width: 80,
+                              height: 70,
                               isNetwork: true,
                             )
                             : Container(),
                   ),
                   SizedBox(width: 10),
                   Text(
-                    widget.categoryModel.title ?? '',
+                    widget.categoryModel?.title ?? '',
                     style: AppController.fontStyle(
                       widget.isMainPage
                           ? fontTypes.regular15

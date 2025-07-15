@@ -2,12 +2,14 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:vodda_old/Logic/Controllers/app-controller.dart';
 import 'package:vodda_old/Logic/Controllers/main_controller.dart';
 import 'package:vodda_old/Logic/Controllers/service_controller.dart';
 import 'package:vodda_old/Public/styles.dart';
 import 'package:vodda_old/UI/Components/General/img.dart';
 import 'package:vodda_old/UI/Components/General/my-scroll.dart';
+import 'package:vodda_old/UI/Components/Items/advertise-item.dart';
 import 'package:vodda_old/UI/Components/Items/main-category-item.dart';
 import 'package:vodda_old/UI/Components/Sliders/detail-slider.dart';
 import 'package:vodda_old/UI/Components/Sliders/slider-types-.dart';
@@ -69,6 +71,14 @@ class Home extends StatelessWidget {
                       margin: EdgeInsets.only(bottom: 30),
                       child: Wrap(
                         children: [
+                          if (serviceController.categories.isEmpty)
+                            for (int i = 0; i < 3; i++)
+                              Shimmer.fromColors(
+                                baseColor: Colors.grey[300]!,
+                                highlightColor: Colors.grey[100]!,
+                                child: AdvertiseItem(null),
+                              ),
+
                           for (var category
                               in serviceController.categories.values)
                             if (category.categoryId == null)
@@ -90,6 +100,36 @@ class Home extends StatelessWidget {
                         ],
                       ),
                     ),
+                    if (serviceController.serviceTags.isEmpty)
+                      for (int i = 0; i < 3; i++)
+                        Padding(
+                          padding: EdgeInsetsGeometry.only(bottom: 40),
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: [
+                                for (int i = 0; i < 6; i++)
+                                  Padding(
+                                    padding: EdgeInsetsGeometry.all(10),
+                                    child: Shimmer.fromColors(
+                                      baseColor: Colors.grey[300]!,
+                                      highlightColor: Colors.grey[100]!,
+                                      child: Container(
+                                        width: 200,
+                                        height: 300,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey[300],
+                                          borderRadius: BorderRadius.circular(
+                                            15,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
+                        ),
                     for (var tag in serviceController.serviceTags)
                       SliderTypes(tag),
                   ],
@@ -130,6 +170,23 @@ class Home extends StatelessWidget {
                                 width: 100,
                                 height: 100,
                                 isNetwork: true,
+                              ),
+                            ),
+                          ),
+                      if (!controller.setting.containsKey("socials"))
+                        for (int i = 0; i < 6; i++)
+                          Shimmer.fromColors(
+                            baseColor: Colors.grey[300]!,
+                            highlightColor: Colors.grey[100]!,
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 15.0),
+                              child: Container(
+                                width: 100,
+                                height: 100,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[300],
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
                               ),
                             ),
                           ),
