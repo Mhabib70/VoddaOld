@@ -103,13 +103,16 @@ class Login extends StatelessWidget {
                                 builder: (controller) {
                                   return InkWell(
                                     onTap: () {
-                                      if (controller.setting.containsKey(
-                                        "rule_link",
-                                      )) {
-                                        launchUrlString(
-                                          controller.setting['rule_link'],
-                                        );
-                                      }
+                                      launchUrlString(
+                                        "https://www.vodda.ir/%D9%82%D9%88%D8%A7%D9%86%DB%8C%D9%86-%D8%AE%D8%AF%D9%85%D8%A7%D8%AA",
+                                      );
+                                      // if (controller.setting.containsKey(
+                                      //   "rule_link",
+                                      // )) {
+                                      //   launchUrlString(
+                                      //     controller.setting['rule_link'],
+                                      //   );
+                                      // }
                                     },
                                     child: Text(
                                       'قوانین ',

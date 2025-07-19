@@ -77,7 +77,7 @@ class MyApp extends StatelessWidget {
 
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: '${appTitle}',
+      title: appTitle,
       color: appColor,
 
       theme: ThemeData(
