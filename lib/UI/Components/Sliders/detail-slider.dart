@@ -57,7 +57,7 @@ class _DetailSliderState extends State<DetailSlider> {
                       height: size.width < maxItemWidth ? 300 : maxItemWidth,
                       child: Card(
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadiusGeometry.circular(25),
+                          borderRadius: BorderRadius.circular(25),
                         ),
                       ),
                     ),

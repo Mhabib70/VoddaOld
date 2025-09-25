@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vodda_old/Logic/Controllers/app-controller.dart';
@@ -8,7 +7,7 @@ import 'package:vodda_old/UI/Components/General/my-scroll.dart';
 import 'package:vodda_old/UI/Components/Inputs/input.dart';
 import 'package:vodda_old/UI/Components/Selectors/checkbox.dart';
 import 'package:vodda_old/UI/Components/Selectors/file-picker.dart';
-import 'package:vodda_old/UI/Components/Selectors/radio-group.dart';
+import 'package:vodda_old/UI/Components/Selectors/radio-group.dart' as rg;
 
 class QuestionTypes extends StatefulWidget {
   const QuestionTypes({Key? key}) : super(key: key);
@@ -64,7 +63,7 @@ class _QuestionTypesState extends State<QuestionTypes> {
                         .questions[orderController.questionIndex]
                         .type ==
                     1
-                ? RadioGroup(
+                ? rg.RadioGroup(
                   orderController
                       .questions[orderController.questionIndex]
                       .options!

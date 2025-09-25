@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:vodda_old/Logic/Controllers/app-controller.dart';
-import 'package:vodda_old/Logic/Controllers/order_controller.dart';
 import 'package:vodda_old/Logic/Controllers/user-controller.dart';
 import 'package:vodda_old/Public/config.dart';
 import 'package:vodda_old/Public/images.dart';
@@ -12,12 +10,12 @@ import 'package:vodda_old/UI/Components/Buttons/btn.dart';
 import 'package:vodda_old/UI/Components/General/img.dart';
 import 'package:vodda_old/UI/Components/General/my-scroll.dart';
 import 'package:vodda_old/UI/Components/Headers/back-header.dart';
-import 'package:vodda_old/UI/Components/Headers/main-header.dart';
+// ...existing code...
 import 'package:vodda_old/UI/Components/Inputs/input.dart';
 import 'package:vodda_old/UI/Components/Popups/bottom-modal.dart';
 import 'package:vodda_old/UI/Components/Popups/loading.dart';
-import 'package:vodda_old/UI/Components/Selectors/radio-group.dart';
-import 'package:vodda_old/UI/Components/Selectors/select-box.dart';
+import 'package:vodda_old/UI/Components/Selectors/radio-group.dart' as rg;
+// ...existing code...
 
 class EditProfile extends StatelessWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -256,7 +254,7 @@ class EditProfile extends StatelessWidget {
                               ),
                             ),
                             SizedBox(height: 15),
-                            RadioGroup(
+                            rg.RadioGroup(
                               UserController.user.value.sex,
                               {'آقا': 1, 'خانم': 0},
                               onChange: (value) {
